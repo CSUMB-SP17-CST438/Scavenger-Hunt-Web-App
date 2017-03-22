@@ -1,31 +1,36 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/static/style.css" />
-        <meta name="google-signin-scope" content="profile email" />        
-        <meta name="google-signin-client_id" content="477128408794-97unbroun6e81j3sp3d865v5e2ck2pav.apps.googleusercontent.com" />        
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <title>Project 2</title>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
+        <title>Project 3</title>
     </head>
     <body>
-    <script>          
-       window.fbAsyncInit = function() {            
-       FB.init({              
-         appId      : '215428635590255',              
-         cookie     : true,              
-         xfbml      : true,              
-         version    : 'v2.8'            
-         });           
-        FB.AppEvents.logPageView();          
-      };          
-      (function(d, s, id){             
-        var js, fjs = d.getElementsByTagName(s)[0];             
-        if (d.getElementById(id)) {return;}             
-        js = d.createElement(s); js.id = id;             
-        js.src = "//connect.facebook.net/en_US/sdk.js";             
-        fjs.parentNode.insertBefore(js, fjs);           
-        }(document, 'script', 'facebook-jssdk'));        
-    </script> 
-        <div id="content"></div>
-        <script type="text/javascript" src="/static/script.js"></script>
+        <div class="jumbotron text-center">
+          <h1>My First Bootstrap Page</h1>
+          <p>Resize this responsive page to see the effect!</p>
+        </div>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <h3>Column 1</h3>
+              <p>Lorem ipsum dolor..</p>
+              <p>Ut enim ad..</p>
+            </div>
+            <div class="col-sm-4">
+              <h3>Column 2</h3>
+              <p>Lorem ipsum dolor..</p>
+              <p>Ut enim ad..</p>
+            </div>
+            <div class="col-sm-4">
+              <h3>Column 3</h3>
+              <p>Lorem ipsum dolor..</p>
+              <p>Ut enim ad..</p>
+            </div>
+          </div>
+        </div>
+        
+        
+        <script src="static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     </body>
 </html>
