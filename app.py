@@ -9,6 +9,7 @@ import json
 import random
 
 
+
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
@@ -35,7 +36,9 @@ def on_disconnect():
 def on_location():
     print "grabbed location"
     
-        
+@socketio.on('my event')
+def handle_my_custom_event(json):
+    print('received json: ' + str(json))   
     
 
     
