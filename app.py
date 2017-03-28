@@ -31,6 +31,10 @@ def on_connect():
 def on_disconnect():
     print 'Someone disconnected!'
     
+@socketio.on('location')
+def on_location():
+    print "grabbed location"
+    
         
     
 
