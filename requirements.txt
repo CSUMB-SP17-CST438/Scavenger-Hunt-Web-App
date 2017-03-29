@@ -1,8 +1,0 @@
-Flask
-flask-socketio
-flask_sqlalchemy
-psycopg2
-requests
-requests_oauthlib
-flask_testing
-

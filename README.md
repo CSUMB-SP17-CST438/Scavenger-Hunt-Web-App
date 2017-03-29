@@ -1,1 +1,0 @@
-# Scavenger-Hunt-Web-App
