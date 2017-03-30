@@ -7,6 +7,7 @@ from flask import request
 import requests_oauthlib
 import json
 import random
+import math 
 
 
 
@@ -62,3 +63,15 @@ if __name__ == '__main__':  # __name__!
         port=int(os.getenv('PORT', 8080)),
         debug=True
     )
+
+def chestRadius(user_lat, user_lon, chest_lat,chest_lon):
+    radius_number = 35 #here where are we going to change the value for which the 
+    total_lat = user_lat - chest_lat
+    total_lon = user_lon - chest_lon
+    
+    total_col = math.sqrt((total_lat * total_lat) + (total_lon * total_lon))
+    
+    if total_col < radius_number:
+        print "You are in the chest area."
+        return True
+    
