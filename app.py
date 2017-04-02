@@ -37,8 +37,12 @@ def on_location():
     print "grabbed location"
     
 @socketio.on('my event')
-def handle_my_custom_event(json):
-    print('received json: ' + str(json))   
+def handle_my_custom_event(data):
+    print('received data: ' + data['test'])   
+    
+@socketio.on('test')
+def testing(data):
+    print data['testVar'] + "testing ya"
     
 
     
