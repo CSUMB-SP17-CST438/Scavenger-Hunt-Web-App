@@ -8,17 +8,20 @@ import requests_oauthlib
 import json
 import random
 import math 
+import urllib2
 
 
 
-send_url = 'http://freegeoip.net/json'
-r = requests.get(send_url)
-j = json.loads(r.text)
-lat = j['latitude']
-lon = j['longitude']
+def location_lookup():
+    try:
+        return json.load(urllib2.urlopen('http://ipinfo.io/json'))
+    except urllib2.HTTPError:
+        return False
 
-print lat
-print lon
+location = location_lookup()
+
+# print city and latitude/longitude
+print location['city'] + ' (' + location['loc'] + ')'
 
 
 
