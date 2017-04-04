@@ -72,7 +72,20 @@
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
+        
+        
+        Socket.on('parkLoc', (data) => {
+            var marker = new google.maps.Marker({
+              position: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
+              map: map,
+              title: 'Hello Me!'
+            });
+        })
+        
       }
+      
+      
+
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);

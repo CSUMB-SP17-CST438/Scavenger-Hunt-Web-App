@@ -20,6 +20,9 @@ socketio = flask_socketio.SocketIO(app)
 lat = 0.0
 lng = 0.0
 
+parkLat = 0.0
+parkLng = 0.0
+
 def setCoords(x, y):
     global lat
     global lng
@@ -31,6 +34,18 @@ def getLat():
     
 def getLng():
     return lng
+    
+def setParkCoords(x, y):
+    global parkLat
+    global parkLng
+    parkLat = x
+    parkLng = y
+    
+def getParkLat():
+    return parkLat
+    
+def getParkLng():
+    return parkLng
     
 @app.route('/')
 def hello():
@@ -56,6 +71,8 @@ def on_location(data):
     print getLat()
     print getLng()
     hint()
+    findNearestPark()
+    sendPark()
     
 @socketio.on('my event')
 def handle_my_custom_event(data):
@@ -97,6 +114,24 @@ def hint():
         'arrowDir': arrow
     })
     
+    
+def findNearestPark():
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(getLat())+","+str(getLng())+"&radius=804&types=park&key=AIzaSyBs4cGYz3h3Zx5ZDi8oaAtHsobIkXQvQOs"
+    response = requests.get(url)
+    json_body = response.json()
+    print json_body["results"][0]["geometry"]["location"]["lat"]
+    print json_body["results"][0]["geometry"]["location"]["lng"]
+    print json_body
+    setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
+    
+    
+def sendPark():
+    socketio.emit('parkLoc', {
+      'parkCoordsLat': getParkLat(),
+      'parkCoordsLng': getParkLng(),
+    });
+    
+def createChest():
     
 
 if __name__ == '__main__':  # __name__!
