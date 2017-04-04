@@ -25,13 +25,19 @@ export class Content extends React.Component {
     }
     
     render() {
-        var imgSrc = "../static/arrows/"
-        imgSrc = imgSrc.concat(this.state.arrowDir)
-        imgSrc = imgSrc.concat(".png")
-        let image = <img id="arrow" src={imgSrc} />
+        let image = null;
+        if (this.state.arrowDir == ''){
+            image = <img id="arrow" />
+        } else {
+            var imgSrc = "../static/arrows/";
+            imgSrc = imgSrc.concat(this.state.arrowDir);
+            imgSrc = imgSrc.concat(".png");
+            image = <img id="arrow" src={imgSrc} />;
+        }
+        
         return (
             <div>
-                <h1>Hello from React!!! w/ compass</h1>
+                <h1>Hello from React!! w/ compass</h1>
                 {image}
                 
             </div>

@@ -13126,17 +13126,23 @@ var Content = exports.Content = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var imgSrc = "../static/arrows/";
-            imgSrc = imgSrc.concat(this.state.arrowDir);
-            imgSrc = imgSrc.concat(".png");
-            var image = React.createElement('img', { id: 'arrow', src: imgSrc });
+            var image = null;
+            if (this.state.arrowDir == '') {
+                image = React.createElement('img', { id: 'arrow' });
+            } else {
+                var imgSrc = "../static/arrows/";
+                imgSrc = imgSrc.concat(this.state.arrowDir);
+                imgSrc = imgSrc.concat(".png");
+                image = React.createElement('img', { id: 'arrow', src: imgSrc });
+            }
+
             return React.createElement(
                 'div',
                 null,
                 React.createElement(
                     'h1',
                     null,
-                    'Hello from React!!! w/ compass'
+                    'Hello from React!! w/ compass'
                 ),
                 image
             );
