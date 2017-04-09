@@ -52,11 +52,13 @@ class chestInfo(db.Model):
     chestNumber = db.Column(db.String(150))
     coordinates = db.Column(db.String(150))
     status = db.Column(db.String(150))
-    def __init__(self, u, c, xy, s):
+    fbID = db.Column(db.String(150))
+    def __init__(self, u, c, xy, s,f):
         self.user = u
         self.chestNumber = c
         self.coordinates = xy
         self.status = s
+        self.fbID = f
     def __repr__(self): # what's __repr__?
         return '<Users Chest: %s>' % self.user    
 
@@ -65,9 +67,16 @@ class progress(db.Model):
     user = db.Column(db.String(150))
     gameSession = db.Column(db.String(150))
     parkName = db.Column(db.String(150))
-    def __init__(self, u, g,p):
+    fbID = db.Column(db.String(150))
+    start = db.Column(db.String(150))
+    end = db.Column(db.String(150))
+
+    def __init__(self, u, g,p,f,s,e):
         self.user = u
         self.gameSession = g
         self.parkName = p
+        self.fbID = f
+        self.start = s
+        self.end = e
     def __repr__(self): # what's __repr__? I still dont have a clue 
         return '<User Progress: %s>' % self.user 
