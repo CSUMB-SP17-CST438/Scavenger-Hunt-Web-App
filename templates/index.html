@@ -15,9 +15,10 @@
   <body>
       
     <div id="map"></div>
-    <button type="button" class="btn btn-success disabled">Start!</button>
-    
-    
+    <button id="start" type="button" class="btn btn-success">Start!</button>
+    <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+    <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
+
     <div id="content"></div>
     
     
@@ -65,6 +66,16 @@
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
+            $('#update').click(function(){
+              socket.emit('updateLocation', {
+                'coords': pos,
+              });
+            });
+            $('#key').click(function(){
+              socket.emit('updateLocation', {
+                'coords': pos,
+              });
+            });
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -73,14 +84,27 @@
           handleLocationError(false, infoWindow, map.getCenter());
         }
         
-        
-        Socket.on('parkLoc', (data) => {
+        socket.on('parkLoc', (data) => {
+          // console.log("testing");
             var marker = new google.maps.Marker({
               position: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
               map: map,
-              title: 'Hello Me!'
+              title: 'Walk here!'
             });
+            // document.getElementById('start').style.visibility = 'hidden';
         })
+        
+        socket.on('door', (data) => {
+          // console.log("testing");
+            var marker = new google.maps.Marker({
+              position: {lat: data['doorLat'], lng: data['doorLng']},
+              map: map,
+              title: 'Door'
+            });
+            // document.getElementById('start').style.visibility = 'hidden';
+        })
+        
+        
         
       }
       
@@ -93,6 +117,27 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
       }
+    </script>
+    
+    <script>
+      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+      $(document).ready(function(){
+          $("#start").click(function(){
+              // alert("The start button was clicked.");
+            socket.emit('start', {
+              
+            });
+          });
+          socket.on('hideStartButton', (data) => {
+            $('#start').hide();
+            $('#update').show();
+          })
+          socket.on('showKeyButton', (data) => {
+            $('#update').hide();
+            $('#key').show();
+          })
+          
+      });
     </script>
 
     

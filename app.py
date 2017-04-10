@@ -9,6 +9,9 @@ import json
 import random
 
 import bearing
+import points
+
+chestsCoords = []
 
 
 
@@ -47,6 +50,35 @@ def getParkLat():
 def getParkLng():
     return parkLng
     
+def setCurrChestLat(x):
+    global chestLatitude
+    chestLatitude = x
+    
+def setCurrChestLng(x):
+    global chestLongitude
+    chestLongitude = x
+
+def getCurrChestLat():
+    return chestLatitude
+    
+def getCurrChestLng():
+    return chestLongitude
+    
+def setChestNum(x):
+    global chestNum
+    chestNum = x
+    
+def getChestNum():
+    return chestNum
+    
+def setObtainedKey(x):
+    global key
+    key = x
+    
+def getObtainedKey():
+    return key
+    
+    
 @app.route('/')
 def hello():
     return flask.render_template('index.html')
@@ -68,11 +100,39 @@ def on_location(data):
     # lat = data['coords']['lat']
     # lng = data['coords']['lng']
     setCoords(data['coords']['lat'], data['coords']['lng'])
-    print getLat()
-    print getLng()
-    hint()
-    findNearestPark()
-    sendPark()
+    # print getLat()
+    # print getLng()
+    # hint()
+    # findNearestPark()
+    # sendPark()
+    
+@socketio.on('start')
+def start_game(data):
+    if (lat != 0 and lng != 0):
+        findNearestPark()
+        sendPark()
+        createChests()
+        createDoor()
+        showDoorOnMap()
+        setChestNum(1)
+        x,y = chestsCoords[0]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        hint()
+        
+    else:
+        print "location not shared"
+        
+@socketio.on('updateLocation')
+def update_player(data):
+    setCoords(data['coords']['lat'], data['coords']['lng'])
+    print "update"
+    print data['coords']['lat']
+    print data['coords']['lng']
+    if (getObtainedKey() == 'Y'):
+        checkDistance(getDoorLat(), getDoorLng())
+    else:
+        checkDistance(getCurrChestLat(), getCurrChestLng())
     
 @socketio.on('my event')
 def handle_my_custom_event(data):
@@ -85,7 +145,9 @@ def testing(data):
     
 
 def hint():
-    bAngle = bearing.bearing(getLat(), getLng(), 36.654179, -121.798798)
+    # updateChestStatus()
+    
+    bAngle = bearing.bearing(getLat(), getLng(), getCurrChestLat(), getCurrChestLng())
     if (bAngle > 0 and bAngle < 22.5) or (bAngle > 337.5 and bAngle < 360):
         # up arrow
         arrow = 'up'
@@ -115,24 +177,140 @@ def hint():
     })
     
     
+def updateChestStatus():
+    # global chest1
+    # global chest2
+    # global chest3
+    # global chest4
+    # global chest5
+    # retrieve from database
+    if (getChestNum() == 1):
+        setChestNum(2)
+        x,y = chestsCoords[1]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        setObtainedKey('N')
+    elif (getChestNum() == 2):
+        setChestNum(3)
+        x,y = chestsCoords[2]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        setObtainedKey('N')
+    elif (getChestNum() == 3):
+        setChestNum(4)
+        x,y = chestsCoords[3]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        setObtainedKey('N')
+    elif (getChestNum() == 4):
+        setChestNum(5)
+        x,y = chestsCoords[4]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+    elif (getChestNum() == 5):
+        setObtainedKey('Y')
+        unlockDoor()
+    # if (chest1 == 'Y' and chest2 == 'N'):
+    #     x,y = chestsCoords[0]
+    #     setCurrChestLat(x)
+    #     setCurrChestLng(y)
+    # elif (chest2 == 'Y' and chest3 == 'N'):
+    #     x,y = chestsCoords[1]
+    #     setCurrChestLat(x)
+    #     setCurrChestLng(y)
+    # elif (chest3 == 'Y' and chest4 == 'N'):
+    #     x,y = chestsCoords[2]
+    #     setCurrChestLat(x)
+    #     setCurrChestLng(y)
+    # elif (chest4 == 'Y' and chest5 == 'N'):
+    #     x,y = chestsCoords[3]
+    #     setCurrChestLat(x)
+    #     setCurrChestLng(y)
+    # elif (chest5 == 'Y'):
+    #     x,y = chestsCoords[4]
+    #     setCurrChestLat(x)
+    #     setCurrChestLng(y)
+    # chest1 = 'Y'
+    # chest2 = 'N'
+    # chest3 = 'N'
+    # chest4 = 'N'
+    # chest5 = 'N'
+    
+def checkDistance(lat, lng):
+    if (getObtainedKey() == 'Y'):
+        if (bearing.haversine(lat, lng, getLat(), getLng()) < 3):
+            print "at door"
+            # congrats
+        else:
+            print "not at door"
+            
+    else:
+        if (bearing.haversine(lat, lng, getLat(), getLng()) < 3):
+            print "found it"
+            # update db
+            updateChestStatus()
+            
+        else:
+            hint()
+        
+def unlockDoor():
+    socketio.emit('hideUpdateButton', {
+        
+    });
+    
 def findNearestPark():
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(getLat())+","+str(getLng())+"&radius=804&types=park&key=AIzaSyBs4cGYz3h3Zx5ZDi8oaAtHsobIkXQvQOs"
     response = requests.get(url)
     json_body = response.json()
-    print json_body["results"][0]["geometry"]["location"]["lat"]
-    print json_body["results"][0]["geometry"]["location"]["lng"]
-    print json_body
+    # print json_body["results"][0]["geometry"]["location"]["lat"]
+    # print json_body["results"][0]["geometry"]["location"]["lng"]
+    # print json_body
     setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
-    
+    print "park coords"
+    print getParkLat()
+    print getParkLng()
     
 def sendPark():
     socketio.emit('parkLoc', {
       'parkCoordsLat': getParkLat(),
       'parkCoordsLng': getParkLng(),
     });
+    socketio.emit('hideStartButton', {
+        
+    });
     
-def createChest():
+def createChests():
+    for i in range(0,5):
+        # print i
+        chestsCoords.append(points.create_random_point(getParkLat(),getParkLng(), 100))
     
+def createDoor():
+    x,y = points.create_random_point(getParkLat(),getParkLng(), 100)
+    setDoorLat(x)
+    setDoorLng(y)
+    
+def setDoorLat(x):
+    global doorLat
+    doorLat = x
+    
+def setDoorLng(y):
+    global doorLng
+    doorLng = y
+    
+def getDoorLat():
+    return doorLat
+
+def getDoorLng():
+    return doorLng
+    
+    
+def showDoorOnMap():
+    x = getDoorLat()
+    y = getDoorLng()
+    socketio.emit('door', {
+      'doorLat': x,
+      'doorLng': y,
+    });
 
 if __name__ == '__main__':  # __name__!
     socketio.run(

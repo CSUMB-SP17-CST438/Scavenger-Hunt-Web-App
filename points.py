@@ -23,9 +23,9 @@ def create_random_point(x0,y0,distance):
 latitude1,longitude1 = 36.653205, -121.797626 
 points = []
 
-for i in range(0,5):
-    # print i
-    points.append(create_random_point(latitude1,longitude1 ,100 ))
+# for i in range(0,5):
+#     # print i
+#     points.append(create_random_point(latitude1,longitude1 ,100 ))
     # x,y = create_random_point(latitude1,longitude1 ,100 )
     # dist = bearing.haversine(x,y,latitude1,longitude1)
     # print "geocoords: " + str(x) + ", " + str(y)
@@ -71,9 +71,9 @@ for i in range(0,5):
 #         redo = True
 #         print "limit"
     
-for i in range(0,5):
-    print i
-    x,y = points[i]
-    dist = bearing.haversine(x,y, latitude1, longitude1)
-    print "geocoords: " + str(x) + ", " + str(y)
-    print "Distance between points is " ,dist    # a value approxiamtely less than 100 meters   
+# for i in range(0,5):
+#     print i
+#     x,y = points[i]
+#     dist = bearing.haversine(x,y, latitude1, longitude1)
+#     print "geocoords: " + str(x) + ", " + str(y)
+#     print "Distance between points is " ,dist    # a value approxiamtely less than 100 meters   
