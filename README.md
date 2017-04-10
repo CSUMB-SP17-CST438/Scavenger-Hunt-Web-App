@@ -19,7 +19,7 @@ Some starter code for React on Flask.
 ```$ webpack --watch```
 
 
-Scavenger Hunt Web appication is the final group project for CST 438 
-It combines Technologies like flask, socketio, apicalls, react, and web to 
+Scavenger Hunt Web appication is the final group project for CST 438.
+It combines technologies like Flask, Socketio, API calls, and React to 
 display and interact with a map to find "chests" on the screen via park location.
 
