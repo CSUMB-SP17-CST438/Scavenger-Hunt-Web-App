@@ -9,28 +9,24 @@
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">this is for mobile-->
+    
     
   </head>
-  
-  
-  
   <body>
-    
-    
-    
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-  <div class="container">
-    ...
-  </div>
-  
-  
-  </nav>
       
     <div id="map"></div>
-    
+    <button id="start" type="button" class="btn btn-success">Start!</button>
+    <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+    <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
 
-   
+     <div class="btn-group">
+      <button id="up" type="button" class="btn btn-primary">Up</button>
+      <button id="left" type="button" class="btn btn-primary">Left</button>
+      <button id="right" type="button" class="btn btn-primary">Right</button>
+      <button i="down" type="button" class="btn btn-primary">Down</button>
+    </div>
+
+    <div id="content"></div>
     
     
     <script type="text/javascript" src="/static/script.js"></script>
@@ -56,9 +52,10 @@
       // locate you.
 
       function initMap() {
+        var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 15
+          zoom: 13
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -73,6 +70,12 @@
             socket.emit('geolocation', {
               'coords': pos,
             });
+            $("#start").click(function(){
+              // alert("The start button was clicked.");
+                socket.emit('startDemo', {
+                  'coords': pos,
+                });
+              });
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
@@ -115,6 +118,22 @@
             // document.getElementById('start').style.visibility = 'hidden';
         })
         
+        socket.on('playerLoc', (data) => {
+            
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
+            }
+            markers = [];
+          // console.log("testing");
+            var marker = new google.maps.Marker({
+              position: {lat: data['demoLat'], lng: data['demoLng']},
+              map: map,
+              title: 'Player'
+            });
+            markers.push(marker);
+            // document.getElementById('start').style.visibility = 'hidden';
+        })
+        
         
         
       }
@@ -133,9 +152,9 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
-          $("#start").click(function(){
+          $("#up").click(function(){
               // alert("The start button was clicked.");
-            socket.emit('start', {
+            socket.emit('up', {
               
             });
           });
@@ -153,36 +172,6 @@
 
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgn3pRUB6WyzLsCARbu8ePVBSU-xfWQb0&callback=initMap"></script>
-    
-    
-    
-    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
-      
-      
-    <div class="row">
-      <div class="col-xs-6 col-md-4"></div>
-        <div class="col-xs-6 col-md-4">
-            
-            
-            <div class="container">
-             
-              <button id="start" type="button" class="btn btn-success">Start!</button>
-              <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
-              <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
-            
-            </div>
-        </div>
-      <div class="col-xs-6 col-md-4">
-         <div id="content"></div>
-      </div>
-    </div>
-      
-      
-  
-</nav>
-    
-    
-    
     
   </body>
 </html>
