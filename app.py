@@ -27,6 +27,8 @@ lng = 0.0
 parkLat = 0.0
 parkLng = 0.0
 
+movingValue = 0.000065
+
 def setCoords(x, y):
     global lat
     global lng
@@ -38,6 +40,18 @@ def getLat():
     
 def getLng():
     return lng
+    
+def setDemoCoords(x, y):
+    global latDemo
+    global lngDemo
+    latDemo = x
+    lngDemo = y
+    
+def getDemoLat():
+    return latDemo
+    
+def getDemoLng():
+    return lngDemo
     
 def setParkCoords(x, y):
     global parkLat
@@ -84,7 +98,9 @@ def getObtainedKey():
 def hello():
     return flask.render_template('index.html')
     
-
+@app.route('/demo')
+def demo():
+    return flask.render_template('demo.html')
 
 @socketio.on('connect')
 def on_connect():
@@ -106,6 +122,22 @@ def on_location(data):
     # hint()
     # findNearestPark()
     # sendPark()
+    
+@socketio.on('startDemo')
+def start_game_demo(data):
+    setDemoCoords(data['coords']['lat'], data['coords']['lng'])
+    findNearestPark()
+    sendPark()
+    createChests()
+    createDoor()
+    showDoorOnMap()
+    setChestNum(1)
+    x,y = chestsCoords[0]
+    setCurrChestLat(x)
+    setCurrChestLng(y)
+    hint()
+    print getDemoLat()
+    print getDemoLng()
     
 @socketio.on('start')
 def start_game(data):
@@ -280,6 +312,10 @@ def sendPark():
         
     });
     
+@socketio.on('up')
+def move_up(data):
+    goUp(getDemoLat(), getDemoLng())
+    
 def createChests():
     for i in range(0,5):
         # print i
@@ -312,6 +348,26 @@ def showDoorOnMap():
       'doorLat': x,
       'doorLng': y,
     });
+    
+def goUp(x,y):
+    latDemo = x + movingValue
+    print latDemo
+    setDemoCoords(latDemo, getDemoLng())
+    print "demo"
+    socketio.emit('playerLoc', {
+       'demoLat': getDemoLat(),
+       'demoLng': getDemoLng(),
+    });
+    print getDemoLat()
+    
+def goDown(x,y):
+    down = x - movingValue
+    
+def goRight(x,y):
+    right = y  + movingValue
+    
+def goLeft(x,y):
+    left = y - movingValue
 
 if __name__ == '__main__':  # __name__!
     socketio.run(

@@ -19,6 +19,12 @@
     <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
     <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
 
+     <div class="btn-group">
+      <button id="up" type="button" class="btn btn-primary">Up</button>
+      <button id="left" type="button" class="btn btn-primary">Left</button>
+      <button id="right" type="button" class="btn btn-primary">Right</button>
+      <button i="down" type="button" class="btn btn-primary">Down</button>
+    </div>
 
     <div id="content"></div>
     
@@ -46,6 +52,7 @@
       // locate you.
 
       function initMap() {
+        var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
           zoom: 13
@@ -63,6 +70,12 @@
             socket.emit('geolocation', {
               'coords': pos,
             });
+            $("#start").click(function(){
+              // alert("The start button was clicked.");
+                socket.emit('startDemo', {
+                  'coords': pos,
+                });
+              });
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
@@ -105,6 +118,22 @@
             // document.getElementById('start').style.visibility = 'hidden';
         })
         
+        socket.on('playerLoc', (data) => {
+            
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
+            }
+            markers = [];
+          // console.log("testing");
+            var marker = new google.maps.Marker({
+              position: {lat: data['demoLat'], lng: data['demoLng']},
+              map: map,
+              title: 'Player'
+            });
+            markers.push(marker);
+            // document.getElementById('start').style.visibility = 'hidden';
+        })
+        
         
         
       }
@@ -123,9 +152,9 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
-          $("#start").click(function(){
+          $("#up").click(function(){
               // alert("The start button was clicked.");
-            socket.emit('start', {
+            socket.emit('up', {
               
             });
           });
