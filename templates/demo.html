@@ -23,7 +23,7 @@
       <button id="up" type="button" class="btn btn-primary">Up</button>
       <button id="left" type="button" class="btn btn-primary">Left</button>
       <button id="right" type="button" class="btn btn-primary">Right</button>
-      <button i="down" type="button" class="btn btn-primary">Down</button>
+      <button id="down" type="button" class="btn btn-primary">Down</button>
     </div>
 
     <div id="content"></div>
@@ -155,6 +155,12 @@
           $("#up").click(function(){
               // alert("The start button was clicked.");
             socket.emit('up', {
+              
+            });
+          });
+          $("#down").click(function(){
+              // alert("The start button was clicked.");
+            socket.emit('down', {
               
             });
           });

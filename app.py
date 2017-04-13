@@ -316,6 +316,10 @@ def sendPark():
 def move_up(data):
     goUp(getDemoLat(), getDemoLng())
     
+@socketio.on('down')
+def move_down(data):
+    goDown(getDemoLat(), getDemoLng())
+    
 def createChests():
     for i in range(0,5):
         # print i
@@ -353,15 +357,24 @@ def goUp(x,y):
     latDemo = x + movingValue
     print latDemo
     setDemoCoords(latDemo, getDemoLng())
-    print "demo"
+    # print "demo"
     socketio.emit('playerLoc', {
        'demoLat': getDemoLat(),
        'demoLng': getDemoLng(),
     });
-    print getDemoLat()
+    # print getDemoLat()
     
 def goDown(x,y):
-    down = x - movingValue
+    # print x
+    latDemo = x - movingValue
+    # print "demo"
+    # print latDemo
+    setDemoCoords(latDemo, getDemoLng())
+    # print getDemoLat()
+    socketio.emit('playerLoc', {
+       'demoLat': getDemoLat(),
+       'demoLng': getDemoLng(),
+    });
     
 def goRight(x,y):
     right = y  + movingValue
