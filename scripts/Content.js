@@ -37,8 +37,10 @@ export class Content extends React.Component {
         
         return (
             <div>
-                <h1>Hello from React!! w/ compass</h1>
-                {image}
+                
+                
+                
+               {image}
                 
             </div>
         );

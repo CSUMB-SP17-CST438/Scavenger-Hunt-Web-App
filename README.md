@@ -1,4 +1,6 @@
 # Scavenger-Hunt-Web-App
+<<<<<<< HEAD
+=======
 
 ## What does our app do?
 Players are able to locate their closest park to start looking for five treasure chests. They will be instructed to find these chests (one by one) by
@@ -29,6 +31,7 @@ Definitely, go outside and test it.
 Additionally, personalizing the web app.
 
 
+>>>>>>> a2812d66bb2cdcec883aaa4bdebb2365f3d3ad57
 
 
 
@@ -51,6 +54,9 @@ Some starter code for React on Flask.
 
 ```$ webpack --watch```
 
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> a2812d66bb2cdcec883aaa4bdebb2365f3d3ad57
