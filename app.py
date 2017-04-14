@@ -320,6 +320,14 @@ def move_up(data):
 def move_down(data):
     goDown(getDemoLat(), getDemoLng())
     
+@socketio.on('right')
+def move_right(data):
+    goRight(getDemoLat(), getDemoLng())
+    
+@socketio.on('left')
+def move_left(data):
+    goLeft(getDemoLat(), getDemoLng())
+    
 def createChests():
     for i in range(0,5):
         # print i
@@ -377,10 +385,20 @@ def goDown(x,y):
     });
     
 def goRight(x,y):
-    right = y  + movingValue
+    lngDemo = y  + movingValue
+    setDemoCoords(getDemoLat(), lngDemo)
+    socketio.emit('playerLoc', {
+       'demoLat': getDemoLat(),
+       'demoLng': getDemoLng(),
+    });
     
 def goLeft(x,y):
-    left = y - movingValue
+    lngDemo = y - movingValue
+    setDemoCoords(getDemoLat(), lngDemo)
+    socketio.emit('playerLoc', {
+       'demoLat': getDemoLat(),
+       'demoLng': getDemoLng(),
+    });
 
 if __name__ == '__main__':  # __name__!
     socketio.run(
