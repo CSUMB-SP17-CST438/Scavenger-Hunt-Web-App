@@ -117,6 +117,7 @@ def on_location(data):
     # lat = data['coords']['lat']
     # lng = data['coords']['lng']
     setCoords(data['coords']['lat'], data['coords']['lng'])
+    setDemoCoords(data['coords']['lat'], data['coords']['lng'])
     # print getLat()
     # print getLng()
     # hint()
@@ -125,47 +126,74 @@ def on_location(data):
     
 @socketio.on('startDemo')
 def start_game_demo(data):
-    setDemoCoords(data['coords']['lat'], data['coords']['lng'])
-    findNearestPark()
-    sendPark()
-    createChests()
-    createDoor()
-    showDoorOnMap()
-    setChestNum(1)
-    x,y = chestsCoords[0]
-    setCurrChestLat(x)
-    setCurrChestLng(y)
-    hint()
-    print getDemoLat()
-    print getDemoLng()
-    
-@socketio.on('start')
-def start_game(data):
+    # print "Test"
     if (lat != 0 and lng != 0):
-        findNearestPark()
+        socketio.emit('playerLoc', {
+           'demoLat': getDemoLat(),
+           'demoLng': getDemoLng(),
+        });
+        findNearestPark(getDemoLat(), getDemoLng())
         sendPark()
         createChests()
+        showChestOnMap()
         createDoor()
+        setObtainedKey('N')
         showDoorOnMap()
         setChestNum(1)
         x,y = chestsCoords[0]
         setCurrChestLat(x)
         setCurrChestLng(y)
-        hint()
+        hint(getDemoLat(), getDemoLng())
+        # print getDemoLat()
+        # print getDemoLng()
+    else:
+        print "location not shared"
+    
+@socketio.on('start')
+def start_game(data):
+    if (lat != 0 and lng != 0):
+        socketio.emit('playerLoc', {
+        'lat': getLat(),
+        'lng': getLng(),
+        })
+        findNearestPark(getLat(), getLng())
+        sendPark()
+        createChests()
+        showChestOnMap()
+        createDoor()
+        setObtainedKey('N')
+        showDoorOnMap()
+        setChestNum(1)
+        x,y = chestsCoords[0]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        hint(getLat(), getLng())
         
     else:
         print "location not shared"
         
+@socketio.on('updateDemoLocation')
+def update_player_demo(data):
+    # print "update demo"
+    if (getObtainedKey() == 'Y'):
+        checkDistance(getDoorLat(), getDoorLng(), getDemoLat(), getDemoLng())
+    else:
+        checkDistance(getCurrChestLat(), getCurrChestLng(), getDemoLat(), getDemoLng())
+        
 @socketio.on('updateLocation')
 def update_player(data):
     setCoords(data['coords']['lat'], data['coords']['lng'])
-    print "update"
-    print data['coords']['lat']
-    print data['coords']['lng']
+    socketio.emit('playerLoc', {
+        'lat': getLat(),
+        'lng': getLng(),
+        })
+    # print "update"
+    # print data['coords']['lat']
+    # print data['coords']['lng']
     if (getObtainedKey() == 'Y'):
-        checkDistance(getDoorLat(), getDoorLng())
+        checkDistance(getDoorLat(), getDoorLng(), getLat(), getLng())
     else:
-        checkDistance(getCurrChestLat(), getCurrChestLng())
+        checkDistance(getCurrChestLat(), getCurrChestLng(), getLat(), getLng())
     
 @socketio.on('my event')
 def handle_my_custom_event(data):
@@ -177,10 +205,10 @@ def testing(data):
     print data['testVar']['lng']
     
 
-def hint():
+def hint(playerLat, playerLng):
     # updateChestStatus()
     
-    bAngle = bearing.bearing(getLat(), getLng(), getCurrChestLat(), getCurrChestLng())
+    bAngle = bearing.bearing(playerLat, playerLng, getCurrChestLat(), getCurrChestLng())
     if (bAngle > 0 and bAngle < 22.5) or (bAngle > 337.5 and bAngle < 360):
         # up arrow
         arrow = 'up'
@@ -269,39 +297,41 @@ def updateChestStatus():
     # chest4 = 'N'
     # chest5 = 'N'
     
-def checkDistance(lat, lng):
+def checkDistance(itemLat, itemLng, playerLat, playerLng):
     if (getObtainedKey() == 'Y'):
-        if (bearing.haversine(lat, lng, getLat(), getLng()) < 3):
+        if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):
             print "at door"
+            print "yay"
             # congrats
         else:
             print "not at door"
             
     else:
-        if (bearing.haversine(lat, lng, getLat(), getLng()) < 3):
+        if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):
             print "found it"
             # update db
             updateChestStatus()
+            hint(playerLat, playerLng)
             
         else:
-            hint()
+            hint(playerLat, playerLng)
         
 def unlockDoor():
-    socketio.emit('hideUpdateButton', {
+    socketio.emit('showKeyButton', {
         
     });
     
-def findNearestPark():
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(getLat())+","+str(getLng())+"&radius=804&types=park&key=AIzaSyBs4cGYz3h3Zx5ZDi8oaAtHsobIkXQvQOs"
+def findNearestPark(playerLat, playerLng):
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(playerLat)+","+str(playerLng)+"&radius=804&types=park&key=AIzaSyBs4cGYz3h3Zx5ZDi8oaAtHsobIkXQvQOs"
     response = requests.get(url)
     json_body = response.json()
     # print json_body["results"][0]["geometry"]["location"]["lat"]
     # print json_body["results"][0]["geometry"]["location"]["lng"]
     # print json_body
     setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
-    print "park coords"
-    print getParkLat()
-    print getParkLng()
+    # print "park coords"
+    # print getParkLat()
+    # print getParkLng()
     
 def sendPark():
     socketio.emit('parkLoc', {
@@ -311,6 +341,9 @@ def sendPark():
     socketio.emit('hideStartButton', {
         
     });
+    # socketio.emit('showParkCirlce', {
+        
+    # });
     
 @socketio.on('up')
 def move_up(data):
@@ -361,9 +394,17 @@ def showDoorOnMap():
       'doorLng': y,
     });
     
+def showChestOnMap():
+    for i in chestsCoords:
+        x, y = i
+        socketio.emit('chests', {
+          'chestLat': x,
+          'chestLng': y,
+        });
+    
 def goUp(x,y):
     latDemo = x + movingValue
-    print latDemo
+    # print latDemo
     setDemoCoords(latDemo, getDemoLng())
     # print "demo"
     socketio.emit('playerLoc', {
