@@ -89,9 +89,11 @@
       // locate you.
 
       function initMap() {
+        var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 15
+          zoom: 15,
+          mapTypeId: 'satellite',
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -136,6 +138,16 @@
               title: 'Walk here!'
             });
             // document.getElementById('start').style.visibility = 'hidden';
+            var circle = new google.maps.Circle({
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              map: map,
+              center: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
+              radius: 120
+            });
         })
         
         socket.on('door', (data) => {
@@ -148,8 +160,44 @@
             // document.getElementById('start').style.visibility = 'hidden';
         })
         
+        socket.on('playerLoc', (data) => {
+            
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
+            }
+            markers = [];
+          // console.log("testing");
+            var marker = new google.maps.Marker({
+              position: {lat: data['lat'], lng: data['lng']},
+              map: map,
+              title: 'Player'
+            });
+            markers.push(marker);
+            // document.getElementById('start').style.visibility = 'hidden';
+        })
         
-        
+        socket.on('chests', (data) => {
+          // console.log("testing");
+            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            var marker = new google.maps.Marker({
+              position: {lat: data['chestLat'], lng: data['chestLng']},
+              map: map,
+              title: 'Chest',
+              icon: image
+            });
+            // document.getElementById('start').style.visibility = 'hidden';
+            var circle = new google.maps.Circle({
+              strokeColor: '#0029ff',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#0029ff',
+              fillOpacity: 0.35,
+              map: map,
+              center: {lat: data['chestLat'], lng: data['chestLng']},
+              radius: 5,
+            });
+            
+        })
       }
       
       
