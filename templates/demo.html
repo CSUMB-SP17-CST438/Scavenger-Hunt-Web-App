@@ -19,11 +19,11 @@
     <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
     <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
 
-     <div class="btn-group">
+    <div class="btn-group">
       <button id="up" type="button" class="btn btn-primary">Up</button>
       <button id="left" type="button" class="btn btn-primary">Left</button>
       <button id="right" type="button" class="btn btn-primary">Right</button>
-      <button i="down" type="button" class="btn btn-primary">Down</button>
+      <button id="down" type="button" class="btn btn-primary">Down</button>
     </div>
 
     <div id="content"></div>
@@ -55,8 +55,11 @@
         var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 13
+          zoom: 13,
+          mapTypeId: 'satellite',
         });
+        
+
         var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
@@ -70,24 +73,19 @@
             socket.emit('geolocation', {
               'coords': pos,
             });
-            $("#start").click(function(){
-              // alert("The start button was clicked.");
-                socket.emit('startDemo', {
-                  'coords': pos,
-                });
-              });
+            
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
             $('#update').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
+              socket.emit('updateDemoLocation', {
+                
               });
             });
             $('#key').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
+              socket.emit('updateDemoLocation', {
+                
               });
             });
           }, function() {
@@ -106,6 +104,17 @@
               title: 'Walk here!'
             });
             // document.getElementById('start').style.visibility = 'hidden';
+            var circle = new google.maps.Circle({
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              map: map,
+              center: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
+              radius: 120
+            });
+          
         })
         
         socket.on('door', (data) => {
@@ -135,6 +144,28 @@
         })
         
         
+        socket.on('chests', (data) => {
+          // console.log("testing");
+            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            var marker = new google.maps.Marker({
+              position: {lat: data['chestLat'], lng: data['chestLng']},
+              map: map,
+              title: 'Chest',
+              icon: image
+            });
+            // document.getElementById('start').style.visibility = 'hidden';
+            var circle = new google.maps.Circle({
+              strokeColor: '#0029ff',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#0029ff',
+              fillOpacity: 0.35,
+              map: map,
+              center: {lat: data['chestLat'], lng: data['chestLng']},
+              radius: 5,
+            });
+            
+        })
         
       }
       
@@ -152,9 +183,33 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
+        $("#start").click(function(){
+              // alert("The start button was clicked.");
+                socket.emit('startDemo', {
+                  
+                });
+              });
           $("#up").click(function(){
               // alert("The start button was clicked.");
             socket.emit('up', {
+              
+            });
+          });
+          $("#down").click(function(){
+              // alert("The start button was clicked.");
+            socket.emit('down', {
+              
+            });
+          });
+          $("#right").click(function(){
+              // alert("The start button was clicked.");
+            socket.emit('right', {
+              
+            });
+          });
+          $("#left").click(function(){
+              // alert("The start button was clicked.");
+            socket.emit('left', {
               
             });
           });
