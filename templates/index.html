@@ -9,18 +9,61 @@
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">this is for mobile-->
+    
+    <style type="text/css">
+      
+    </style>
     
     
   </head>
+  
+  
+  
   <body>
+    
+    
+    
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+  <div class="container">
+    ...
+  </div>
+  
+  
+  </nav>
       
     <div id="map"></div>
-    <button id="start" type="button" class="btn btn-success">Start!</button>
-    <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
-    <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
-
-
-    <div id="content"></div>
+    
+    
+ <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+      
+      
+   
+      
+      
+          <div class="row">
+      <div class="col-xs-6 col-md-4"></div>
+         <div class="col-xs-6 col-md-4">
+            
+           <p class="text-center">
+            
+             
+              <button id="start" type="button" class="btn btn-success">Start!</button>
+              <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+              <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
+             </p>
+         </div>
+        
+       <div class="col-xs-6 col-md-4">
+          <div id="content"></div>
+       </div>
+      
+   </div> 
+      
+      
+      
+    </nav>
+   
     
     
     <script type="text/javascript" src="/static/script.js"></script>
@@ -49,7 +92,7 @@
         var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 13,
+          zoom: 15,
           mapTypeId: 'satellite',
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
@@ -191,6 +234,13 @@
 
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgn3pRUB6WyzLsCARbu8ePVBSU-xfWQb0&callback=initMap"></script>
+    
+    
+    
+   
+    
+    
+    
     
   </body>
 </html>

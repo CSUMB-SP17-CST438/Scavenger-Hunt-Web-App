@@ -51,6 +51,3 @@ Some starter code for React on Flask.
 
 ```$ webpack --watch```
 
-
-
-
