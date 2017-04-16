@@ -13,13 +13,15 @@ import models
 import bearing
 import points
 
-chestsCoords = []
+
 
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 # import models 
+
+chestsCoords = []
 
 lat = 0.0
 lng = 0.0
@@ -126,6 +128,7 @@ def on_location(data):
     
 @socketio.on('startDemo')
 def start_game_demo(data):
+    del chestsCoords[:]
     # print "Test"
     if (lat != 0 and lng != 0):
         socketio.emit('playerLoc', {
@@ -151,6 +154,7 @@ def start_game_demo(data):
     
 @socketio.on('start')
 def start_game(data):
+    del chestsCoords[:]
     if (lat != 0 and lng != 0):
         socketio.emit('playerLoc', {
         'lat': getLat(),
@@ -338,6 +342,10 @@ def sendPark():
       'parkCoordsLat': getParkLat(),
       'parkCoordsLng': getParkLng(),
     });
+    socketio.emit('parkArea', {
+      'parkLat': getParkLat(),
+      'parkLng': getParkLng(),
+    });
     socketio.emit('hideStartButton', {
         
     });
@@ -397,6 +405,7 @@ def showDoorOnMap():
 def showChestOnMap():
     for i in chestsCoords:
         x, y = i
+        # print "hello"
         socketio.emit('chests', {
           'chestLat': x,
           'chestLng': y,
