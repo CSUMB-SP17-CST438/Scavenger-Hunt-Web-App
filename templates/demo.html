@@ -77,9 +77,8 @@
     
     
     
-      <div>
+     
     <div id="map"></div>
-    </div>
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
       
       
@@ -365,7 +364,29 @@
           
       });
       
-      
+      $(document).keydown(function(e) {
+          console.log(e.keyCode);
+          if (e.keyCode == 87) {
+            // w
+            socket.emit('up', {
+              
+            });
+          } else if (e.keyCode == 65) {
+            // a
+            socket.emit('left', {
+              
+            });
+          } else if (e.keyCode == 68) {
+            // d
+            socket.emit('right', {
+              
+            });
+          } else if (e.keyCode == 83)
+          // s
+          socket.emit('down', {
+              
+            });
+      });
       
       
     </script>
