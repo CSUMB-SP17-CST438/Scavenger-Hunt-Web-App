@@ -9,7 +9,6 @@ import json
 import random
 import math 
 import urllib2
-import models
 import bearing
 import points
 
@@ -19,8 +18,9 @@ import points
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-# import models 
+import models
 
+all_users = [];
 chestsCoords = []
 
 lat = 0.0
@@ -129,8 +129,37 @@ def on_location(data):
 @socketio.on('startDemo')
 def start_game_demo(data):
     del chestsCoords[:]
+    
+    
     # print "Test"
     if (lat != 0 and lng != 0):
+        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+        json = response.json()
+        flag = False;
+        print json['name']
+        
+        users = models.Users.query.all()
+        del all_users[:]
+        for user in users:
+            all_users.append({        
+                'name': user.user,        
+                'picture': user.img, 
+                'fbID': user.fbID,   
+            })
+        
+        
+        for user in users:
+            if (user.user == json['name']):
+                flag = True;
+        if (flag == False):
+            all_users.append({
+                    'name': json['name'],        
+                    'picture': json['picture']['data']['url'],
+                    'media': 'FB',
+                })
+            usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
+            models.db.session.add(usr)
+            models.db.session.commit()
         socketio.emit('playerLoc', {
            'demoLat': getDemoLat(),
            'demoLng': getDemoLng(),
