@@ -90,10 +90,10 @@
       <div class="col-xs-3 col-md-4">
         
         <div class="btn-group">
-      <button id="up" type="button" class="btn btn-primary">Up</button>
-      <button id="left" type="button" class="btn btn-primary">Left</button>
-      <button id="right" type="button" class="btn btn-primary">Right</button>
-      <button id="down" type="button" class="btn btn-primary">Down</button>
+      <button id="up" type="button" class="btn btn-primary" style="display: none">Up</button>
+      <button id="left" type="button" class="btn btn-primary" style="display: none">Left</button>
+      <button id="right" type="button" class="btn btn-primary" style="display: none">Right</button>
+      <button id="down" type="button" class="btn btn-primary" style="display: none">Down</button>
     </div>
         
       </div>
@@ -209,7 +209,7 @@
               fillOpacity: 0.35,
               map: map,
               center: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
-              radius: 120
+              radius: 130
             });
           
         })
@@ -313,6 +313,10 @@
           socket.on('hideStartButton', (data) => {
             $('#start').hide();
             $('#update').show();
+            $('#up').show();
+            $('#left').show();
+            $('#right').show();
+            $('#down').show();
           })
           socket.on('showKeyButton', (data) => {
             $('#update').hide();
