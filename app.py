@@ -319,8 +319,14 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
             print "at door"
             print "yay"
             # congrats
+            socketio.emit('youwin',{
+                
+            });
         else:
             print "not at door"
+            socketio.emit('notyet',{
+                
+            });
             
     else:
         if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):

@@ -16,20 +16,38 @@
       h3{
       color:white;
     }
+    h1{
+       text-align:center;
+    }
+    
+          .col-centered{
+    float: none;
+    margin: 0 auto;
+    text-align:left;
+    }
     </style>
     
-    <script >
-      
-      window.onload = function() {
     
-        alert ('WELCOME TO SCAVENGER HUNT\n OBJECTIVE: FIND ALL 5 chests to unlock door, Login and then start to find park.'); 
-    
-};
-    </script>
     
   </head>
   <body>
     
+      <div id = "splash">
+      <div id = row>
+        <h1>Welcome to TITLE_OF_GAME</h1>
+        <div class="col-md-2 col-centered text-center">
+      
+      <strong>OBJECTIVE:</strong><p>Find all 5 chests to unlock the door.</p> 
+      <strong>DIRECTIONS:</strong><p>Login with Facebook and relocate to the stated park.</p> 
+      
+      <button id="accept" type="button" class="btn btn-success">Understood!</button>
+       </div>
+      </div>
+    </div>
+    
+    
+    
+    <div id = "playArea" style = "display: none">
     
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container">
@@ -59,7 +77,10 @@
         <div class="col-xs-6 col-md-4">
           <h3>GAME TITLE</h3>
         </div>
-         <div class="col-xs-6 col-md-4"></div>
+         <div class="col-xs-6 col-md-4">
+           
+           <button id="rules" type="button" class="btn btn-info" >Directions</button>
+         </div>
       
       
     </div>
@@ -75,10 +96,9 @@
     
     
     
-    
-    
+
       
-    <div id="map"></div>
+    
     
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
       
@@ -118,8 +138,12 @@
       
     </nav>
     
+    </div>  
     
     
+    
+<div id="map"></div>
+
     
     
 
@@ -289,6 +313,21 @@
                   
                 });
               });
+              
+        $("#accept").click(function(){
+          $('#splash').hide();
+            $('#playArea').show();
+            
+          
+        });      
+        
+         $("#rules").click(function(){
+          $('#playArea').hide();
+            $('#splash').show();
+            
+          
+        }); 
+        
           $("#up").click(function(){
               // alert("The start button was clicked.");
             socket.emit('up', {
@@ -358,6 +397,14 @@
           $('#chest5').hide();
             $('#chest51').show();
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
+        })
+        
+        socket.on('youwin', (data) => {
+          alert(" DOOR'S UNLOCKED YOU WON! ");
+        })
+        
+        socket.on('notyet',(data)=> {
+          alert("NOT THE DOOR, GO TO THE DOOR ICON!")
         })
           
           
