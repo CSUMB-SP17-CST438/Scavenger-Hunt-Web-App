@@ -12,6 +12,10 @@
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">this is for mobile-->
     
     <style type="text/css">
+    
+    h3{
+      color:white;
+    }
       
     </style>
     
@@ -26,7 +30,39 @@
     
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container">
-    ...
+    
+    <div class= "row">
+      
+       <div class="col-xs-6 col-md-4">
+         
+         <img src="../static/chests/missingChest.png" id = "chest1" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest11" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest2" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest21" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest3" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest31" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest4" height="42" width="42" >
+         <img src="../static/chests/foundChest.png" id = "chest41" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest5" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest51" height="42" width="42" style="display: none">
+         
+         <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
+         
+       </div>
+        <div class="col-xs-6 col-md-4">
+          <h3>GAME TITLE</h3>
+        </div>
+         <div class="col-xs-6 col-md-4"></div>
+      
+      
+    </div>
+    
+    
+    
   </div>
   
   
@@ -42,8 +78,8 @@
       
       
           <div class="row">
-      <div class="col-xs-6 col-md-4"></div>
-         <div class="col-xs-6 col-md-4">
+      <div class="col-xs-3 col-md-4"></div>
+         <div class="col-xs-3 col-md-4">
             
            <p class="text-center">
             
@@ -54,7 +90,7 @@
              </p>
          </div>
         
-       <div class="col-xs-6 col-md-4">
+       <div class="col-xs-3 col-md-4">
           <div id="content"></div>
        </div>
       
@@ -151,6 +187,15 @@
             });
         })
         
+        socket.on('changeIcon1', (data) => {
+          
+          $('#chest1').hide();
+            $('#chest11').show();
+        })
+        
+        
+        
+        
         socket.on('door', (data) => {
           // console.log("testing");
             var marker = new google.maps.Marker({
@@ -179,7 +224,7 @@
         
         socket.on('chests', (data) => {
           // console.log("testing");
-            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            var image = "../static/chests/foundChest.png";
             var marker = new google.maps.Marker({
               position: {lat: data['chestLat'], lng: data['chestLng']},
               map: map,
@@ -229,6 +274,38 @@
             $('#update').hide();
             $('#key').show();
           })
+          
+          
+          
+          
+          socket.on('changeIcon1', (data) => {
+          
+          $('#chest1').hide();
+            $('#chest11').show();
+        })
+        socket.on('changeIcon2', (data) => {
+          
+          $('#chest2').hide();
+            $('#chest21').show();
+        })
+        socket.on('changeIcon3', (data) => {
+          
+          $('#chest3').hide();
+            $('#chest31').show();
+        })
+        socket.on('changeIcon4', (data) => {
+          
+          $('#chest4').hide();
+            $('#chest41').show();
+        })
+        socket.on('changeIcon5', (data) => {
+          
+          $('#chest5').hide();
+            $('#chest51').show();
+        })
+          
+          
+          
           
       });
     </script>
