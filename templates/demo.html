@@ -31,6 +31,14 @@
     
   </head>
   <body>
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1875922112681168";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     
       <div id = "splash">
       <div id = row>
@@ -78,8 +86,12 @@
           <h3>GAME TITLE</h3>
         </div>
          <div class="col-xs-6 col-md-4">
-           
-           <button id="rules" type="button" class="btn btn-info" >Directions</button>
+
+           <!--<div id="facebook"></div>-->
+           <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+
+
+           <button id="rules" type="button" class="btn btn-info" >Directions</button>\
          </div>
       
       
@@ -94,12 +106,7 @@
     
     
     
-    
-    
-
-      
-    
-    
+    <div id="map"></div>
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
       
       
@@ -150,6 +157,7 @@
     
     
     
+
     <script type="text/javascript" src="/static/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -309,9 +317,26 @@
       $(document).ready(function(){
         $("#start").click(function(){
               // alert("The start button was clicked.");
-                socket.emit('startDemo', {
-                  
-                });
+              FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                  // the user is logged in and has authenticated your
+                  // app, and response.authResponse supplies
+                  // the user's ID, a valid access token, a signed
+                  // request, and the time the access token 
+                  // and signed request each expire
+                  // var uid = response.authResponse.userID;
+                  var accessToken = response.authResponse.accessToken;
+                  socket.emit('startDemo', {
+                    'facebook_user_token': accessToken,
+                  });
+                } else if (response.status === 'not_authorized') {
+                  // the user is logged in to Facebook, 
+                  // but has not authenticated your app
+                } else {
+                  // the user isn't logged in to Facebook.
+                }
+             });
+                
               });
               
         $("#accept").click(function(){
@@ -424,7 +449,29 @@
           
       });
       
-      
+      $(document).keydown(function(e) {
+          console.log(e.keyCode);
+          if (e.keyCode == 87) {
+            // w
+            socket.emit('up', {
+              
+            });
+          } else if (e.keyCode == 65) {
+            // a
+            socket.emit('left', {
+              
+            });
+          } else if (e.keyCode == 68) {
+            // d
+            socket.emit('right', {
+              
+            });
+          } else if (e.keyCode == 83)
+          // s
+          socket.emit('down', {
+              
+            });
+      });
       
       
     </script>
