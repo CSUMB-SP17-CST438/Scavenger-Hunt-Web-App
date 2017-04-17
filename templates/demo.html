@@ -22,7 +22,7 @@
       
       window.onload = function() {
     
-        alert ('Please use your mobile device in landscape mode'); 
+        alert ('WELCOME TO SCAVENGER HUNT\n OBJECTIVE: FIND ALL 5 chests to unlock door, Login and then start to find park.'); 
     
 };
     </script>
@@ -178,7 +178,10 @@
             $('#update').click(function(){
               socket.emit('updateDemoLocation', {
                 
+                
               });
+              
+              
             });
             $('#key').click(function(){
               socket.emit('updateDemoLocation', {
@@ -302,7 +305,10 @@
               // alert("The start button was clicked.");
             socket.emit('right', {
               
+              
             });
+            
+            
           });
           $("#left").click(function(){
               // alert("The start button was clicked.");
@@ -326,26 +332,32 @@
           
           $('#chest1').hide();
             $('#chest11').show();
+            alert("YOU FOUND A CHEST 4 MORE TO GO!");
+            
         })
         socket.on('changeIcon2', (data) => {
           
           $('#chest2').hide();
             $('#chest21').show();
+             alert("YOU FOUND A CHEST 3 MORE TO GO!");
         })
         socket.on('changeIcon3', (data) => {
           
           $('#chest3').hide();
             $('#chest31').show();
+             alert("YOU FOUND A CHEST 2 MORE TO GO!");
         })
         socket.on('changeIcon4', (data) => {
           
           $('#chest4').hide();
             $('#chest41').show();
+             alert("YOU FOUND A CHEST 1 MORE TO GO!");
         })
         socket.on('changeIcon5', (data) => {
           
           $('#chest5').hide();
             $('#chest51').show();
+             alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
         })
           
           
