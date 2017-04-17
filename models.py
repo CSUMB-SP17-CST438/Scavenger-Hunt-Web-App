@@ -9,9 +9,9 @@ db = flask_sqlalchemy.SQLAlchemy(app.app)
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key
-    img = db.Column(db.String(150))
-    fbID = db.Column(db.String(150))
-    user = db.Column(db.String(120))
+    img = db.Column(db.String(500))
+    fbID = db.Column(db.String(500))
+    user = db.Column(db.String(150))
     def __init__(self, i, f, u):
         self.img = i
         self.fbID = f
@@ -24,8 +24,8 @@ class chestInfo(db.Model):
     user = db.Column(db.String(150))
     chestNumber = db.Column(db.Integer)
     coordinates = db.Column(db.String(150))
-    status = db.Column(db.String(5))
-    fbID = db.Column(db.String(150))
+    status = db.Column(db.String(100))
+    fbID = db.Column(db.String(500))
     def __init__(self, u, c, xy, s,f):
         self.user = u
         self.chestNumber = c
@@ -38,9 +38,9 @@ class chestInfo(db.Model):
 class progress(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key
     user = db.Column(db.String(150))
-    gameSession = db.Column(db.String(5))
+    gameSession = db.Column(db.String(100))
     parkName = db.Column(db.String(150))
-    fbID = db.Column(db.String(150))
+    fbID = db.Column(db.String(500))
     start = db.Column(db.String(150))
     end = db.Column(db.String(150))
 

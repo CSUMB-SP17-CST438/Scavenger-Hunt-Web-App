@@ -11,14 +11,14 @@ import math
 import urllib2
 import bearing
 import points
-
+import models
 
 
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-import models
+
 
 all_users = [];
 chestsCoords = []
@@ -129,7 +129,7 @@ def on_location(data):
 @socketio.on('startDemo')
 def start_game_demo(data):
     del chestsCoords[:]
-    
+    users = models.Users.query.all()
     
     # print "Test"
     if (lat != 0 and lng != 0):
@@ -138,7 +138,8 @@ def start_game_demo(data):
         flag = False;
         print json['name']
         
-        users = models.Users.query.all()
+        
+        
         del all_users[:]
         for user in users:
             all_users.append({        
@@ -160,6 +161,7 @@ def start_game_demo(data):
             usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
             models.db.session.add(usr)
             models.db.session.commit()
+            print "added TO DATABASe!"
         socketio.emit('playerLoc', {
            'demoLat': getDemoLat(),
            'demoLng': getDemoLng(),
