@@ -246,29 +246,45 @@ def updateChestStatus():
     # global chest5
     # retrieve from database
     if (getChestNum() == 1):
+        socketio.emit('changeIcon1', {
+        
+        });
+    #print"changed"
         setChestNum(2)
         x,y = chestsCoords[1]
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
     elif (getChestNum() == 2):
+        socketio.emit('changeIcon2', {
+        
+        });
         setChestNum(3)
         x,y = chestsCoords[2]
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
     elif (getChestNum() == 3):
+        socketio.emit('changeIcon3', {
+        
+        });
         setChestNum(4)
         x,y = chestsCoords[3]
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
     elif (getChestNum() == 4):
+        socketio.emit('changeIcon4', {
+        
+        });
         setChestNum(5)
         x,y = chestsCoords[4]
         setCurrChestLat(x)
         setCurrChestLng(y)
     elif (getChestNum() == 5):
+        socketio.emit('changeIcon5', {
+        
+        });
         setObtainedKey('Y')
         unlockDoor()
     # if (chest1 == 'Y' and chest2 == 'N'):

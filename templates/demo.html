@@ -11,22 +11,112 @@
     <meta charset="utf-8">
     
     
+    <style type="text/css">
+      
+      h3{
+      color:white;
+    }
+    </style>le
+    
+    
+    
   </head>
   <body>
+    
+    
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+  <div class="container">
+    
+    <div class= "row">
+      
+       <div class="col-xs-6 col-md-4">
+         
+         <img src="../static/chests/missingChest.png" id = "chest1" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest11" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest2" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest21" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest3" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest31" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest4" height="42" width="42" >
+         <img src="../static/chests/foundChest.png" id = "chest41" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest5" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest51" height="42" width="42" style="display: none">
+         
+         <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
+         
+       </div>
+        <div class="col-xs-6 col-md-4">
+          <h3>GAME TITLE</h3>
+        </div>
+         <div class="col-xs-6 col-md-4"></div>
+      
+      
+    </div>
+    
+    
+    
+  </div>
+  
+  
+  </nav>
+    
+    
+    
+    
+    
+    
+    
       
     <div id="map"></div>
-    <button id="start" type="button" class="btn btn-success">Start!</button>
-    <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
-    <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
-
-    <div class="btn-group">
+    
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+      
+      
+   
+      
+      
+          <div class="row">
+      <div class="col-xs-3 col-md-4">
+        
+        <div class="btn-group">
       <button id="up" type="button" class="btn btn-primary">Up</button>
       <button id="left" type="button" class="btn btn-primary">Left</button>
       <button id="right" type="button" class="btn btn-primary">Right</button>
       <button id="down" type="button" class="btn btn-primary">Down</button>
     </div>
+        
+      </div>
+         <div class="col-xs-3 col-md-4">
+            
+           <p class="text-center">
+            
+             
+              <button id="start" type="button" class="btn btn-success">Start!</button>
+              <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+              <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
+             </p>
+         </div>
+        
+       <div class="col-xs-3 col-md-4">
+          <div id="content"></div>
+       </div>
+      
+   </div> 
+      
+      
+      
+    </nav>
+    
+    
+    
+    
+    
 
-    <div id="content"></div>
+    
     
     
     <script type="text/javascript" src="/static/script.js"></script>
@@ -222,7 +312,51 @@
             $('#key').show();
           })
           
+          
+          
+          
+          socket.on('changeIcon1', (data) => {
+          
+          $('#chest1').hide();
+            $('#chest11').show();
+        })
+        socket.on('changeIcon2', (data) => {
+          
+          $('#chest2').hide();
+            $('#chest21').show();
+        })
+        socket.on('changeIcon3', (data) => {
+          
+          $('#chest3').hide();
+            $('#chest31').show();
+        })
+        socket.on('changeIcon4', (data) => {
+          
+          $('#chest4').hide();
+            $('#chest41').show();
+        })
+        socket.on('changeIcon5', (data) => {
+          
+          $('#chest5').hide();
+            $('#chest51').show();
+        })
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
       });
+      
+      
+      
+      
     </script>
 
     
