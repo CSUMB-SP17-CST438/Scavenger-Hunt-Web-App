@@ -11,14 +11,71 @@ import math
 import urllib2
 import bearing
 import points
-import models
 
+import models
 
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = flask_sqlalchemy.SQLAlchemy(app)
+models.db.init_app(app)
 
+
+
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = flask_sqlalchemy.SQLAlchemy(app)
+
+# class Users(db.Model):
+#     id = db.Column(db.Integer, primary_key=True) # key
+#     img = db.Column(db.String(500))
+#     fbID = db.Column(db.String(500))
+#     user = db.Column(db.String(150))
+#     def __init__(self, i, f, u):
+#         self.img = i
+#         self.fbID = f
+#         self.user = u
+#     def __repr__(self): # what's __repr__?
+#         return '<Users name: %s>' % self.user
+
+# class chestInfo(db.Model):
+#     id = db.Column(db.Integer, primary_key=True) # key
+#     user = db.Column(db.String(150))
+#     chestNumber = db.Column(db.Integer)
+#     coordinates = db.Column(db.String(150))
+#     status = db.Column(db.String(100))
+#     fbID = db.Column(db.String(500))
+#     def __init__(self, u, c, xy, s,f):
+#         self.user = u
+#         self.chestNumber = c
+#         self.coordinates = xy
+#         self.status = s
+#         self.fbID = f
+#     def __repr__(self): # what's __repr__?
+#         return '<Users Chest: %s>' % self.user    
+
+# class progress(db.Model):
+#     id = db.Column(db.Integer, primary_key=True) # key
+#     user = db.Column(db.String(150))
+#     gameSession = db.Column(db.String(100))
+#     parkName = db.Column(db.String(150))
+#     fbID = db.Column(db.String(500))
+#     start = db.Column(db.String(150))
+#     end = db.Column(db.String(150))
+
+#     def __init__(self, u, g,p,f,s,e):
+#         self.user = u
+#         self.gameSession = g
+#         self.parkName = p
+#         self.fbID = f
+#         self.start = s
+#         self.end = e
+#     def __repr__(self): # what's __repr__? I still dont have a clue 
+#         return '<User Progress: %s>' % self.user 
 
 all_users = [];
 chestsCoords = []
@@ -129,39 +186,40 @@ def on_location(data):
 @socketio.on('startDemo')
 def start_game_demo(data):
     del chestsCoords[:]
-    users = models.Users.query.all()
+    # users = models.Users.query.all()
+    users = models.db.session.query(models.Users).all()
     
-    # print "Test"
+    # # print "Test"
     if (lat != 0 and lng != 0):
-        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
-        json = response.json()
-        flag = False;
-        print json['name']
+    #     response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+    #     json = response.json()
+    #     flag = False;
+    #     print json['name']
         
         
         
-        del all_users[:]
-        for user in users:
-            all_users.append({        
-                'name': user.user,        
-                'picture': user.img, 
-                'fbID': user.fbID,   
-            })
+    #     del all_users[:]
+    #     for user in users:
+    #         all_users.append({        
+    #             'name': user.user,        
+    #             'picture': user.img, 
+    #             'fbID': user.fbID,   
+    #         })
         
         
-        for user in users:
-            if (user.user == json['name']):
-                flag = True;
-        if (flag == False):
-            all_users.append({
-                    'name': json['name'],        
-                    'picture': json['picture']['data']['url'],
-                    'media': 'FB',
-                })
-            usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
-            models.db.session.add(usr)
-            models.db.session.commit()
-            print "added TO DATABASe!"
+    #     for user in users:
+    #         if (user.user == json['name']):
+    #             flag = True;
+    #     if (flag == False):
+    #         all_users.append({
+    #                 'name': json['name'],        
+    #                 'picture': json['picture']['data']['url'],
+    #                 'media': 'FB',
+    #             })
+    #         usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
+    #         models.db.session.add(usr)
+    #         models.db.session.commit()
+    #         print "added TO DATABASe!"
         socketio.emit('playerLoc', {
            'demoLat': getDemoLat(),
            'demoLng': getDemoLng(),

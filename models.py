@@ -1,11 +1,10 @@
 # models.py
 import flask_sqlalchemy
-import app
+# import app
 import os
 
 # app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'  
-db = flask_sqlalchemy.SQLAlchemy(app.app)
+db = flask_sqlalchemy.SQLAlchemy()
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key
