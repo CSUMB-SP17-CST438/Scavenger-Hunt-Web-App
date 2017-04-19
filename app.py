@@ -191,35 +191,41 @@ def start_game_demo(data):
     
     # # print "Test"
     if (lat != 0 and lng != 0):
-    #     response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
-    #     json = response.json()
-    #     flag = False;
-    #     print json['name']
+        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+        json = response.json()
+        flag = False;
+        print json['name']
         
         
         
-    #     del all_users[:]
-    #     for user in users:
-    #         all_users.append({        
-    #             'name': user.user,        
-    #             'picture': user.img, 
-    #             'fbID': user.fbID,   
-    #         })
+        del all_users[:]
+        for user in users:
+            all_users.append({        
+                'name': user.user,        
+                'picture': user.img, 
+                'fbID': user.fbID,   
+            })
         
         
-    #     for user in users:
-    #         if (user.user == json['name']):
-    #             flag = True;
-    #     if (flag == False):
-    #         all_users.append({
-    #                 'name': json['name'],        
-    #                 'picture': json['picture']['data']['url'],
-    #                 'media': 'FB',
-    #             })
-    #         usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
-    #         models.db.session.add(usr)
-    #         models.db.session.commit()
-    #         print "added TO DATABASe!"
+        for user in users:
+            if (user.user == json['name']):
+                flag = True;
+        if (flag == False):
+            all_users.append({
+                    'name': json['name'],        
+                    'picture': json['picture']['data']['url'],
+                    'media': 'FB',
+                })
+    # users = models.db.session.query(models.Users).all()
+            usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
+            models.db.session.add(usr)
+            models.db.session.commit()
+            
+            # usr = models.progress(json['name'], 'Y', )
+            # models.db.session.add(usr)
+            # models.db.session.commit()
+            
+            # print "added TO DATABASe!"
         socketio.emit('playerLoc', {
            'demoLat': getDemoLat(),
            'demoLng': getDemoLng(),
@@ -442,6 +448,7 @@ def findNearestPark(playerLat, playerLng):
     json_body = response.json()
     # print json_body["results"][0]["geometry"]["location"]["lat"]
     # print json_body["results"][0]["geometry"]["location"]["lng"]
+    print json_body["results"][0]["name"]
     # print json_body
     setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
     # print "park coords"
