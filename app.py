@@ -11,6 +11,7 @@ import math
 import urllib2
 import bearing
 import points
+import datetime
 
 import models
 
@@ -22,60 +23,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localh
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = flask_sqlalchemy.SQLAlchemy(app)
 models.db.init_app(app)
-
-
-
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = flask_sqlalchemy.SQLAlchemy(app)
-
-# class Users(db.Model):
-#     id = db.Column(db.Integer, primary_key=True) # key
-#     img = db.Column(db.String(500))
-#     fbID = db.Column(db.String(500))
-#     user = db.Column(db.String(150))
-#     def __init__(self, i, f, u):
-#         self.img = i
-#         self.fbID = f
-#         self.user = u
-#     def __repr__(self): # what's __repr__?
-#         return '<Users name: %s>' % self.user
-
-# class chestInfo(db.Model):
-#     id = db.Column(db.Integer, primary_key=True) # key
-#     user = db.Column(db.String(150))
-#     chestNumber = db.Column(db.Integer)
-#     coordinates = db.Column(db.String(150))
-#     status = db.Column(db.String(100))
-#     fbID = db.Column(db.String(500))
-#     def __init__(self, u, c, xy, s,f):
-#         self.user = u
-#         self.chestNumber = c
-#         self.coordinates = xy
-#         self.status = s
-#         self.fbID = f
-#     def __repr__(self): # what's __repr__?
-#         return '<Users Chest: %s>' % self.user    
-
-# class progress(db.Model):
-#     id = db.Column(db.Integer, primary_key=True) # key
-#     user = db.Column(db.String(150))
-#     gameSession = db.Column(db.String(100))
-#     parkName = db.Column(db.String(150))
-#     fbID = db.Column(db.String(500))
-#     start = db.Column(db.String(150))
-#     end = db.Column(db.String(150))
-
-#     def __init__(self, u, g,p,f,s,e):
-#         self.user = u
-#         self.gameSession = g
-#         self.parkName = p
-#         self.fbID = f
-#         self.start = s
-#         self.end = e
-#     def __repr__(self): # what's __repr__? I still dont have a clue 
-#         return '<User Progress: %s>' % self.user 
 
 all_users = [];
 chestsCoords = []
@@ -124,6 +71,13 @@ def getParkLat():
 def getParkLng():
     return parkLng
     
+def setParkName(x):
+    global parkName
+    parkName = x
+    
+def getParkName():
+    return parkName
+    
 def setCurrChestLat(x):
     global chestLatitude
     chestLatitude = x
@@ -137,6 +91,9 @@ def getCurrChestLat():
     
 def getCurrChestLng():
     return chestLongitude
+    
+def getCurrChestCoords():
+    return (chestLatitude, chestLongitude)
     
 def setChestNum(x):
     global chestNum
@@ -198,6 +155,27 @@ def start_game_demo(data):
         
         
         
+        
+            # print "added TO DATABASe!"
+        socketio.emit('playerLoc', {
+           'demoLat': getDemoLat(),
+           'demoLng': getDemoLng(),
+        });
+        findNearestPark(getDemoLat(), getDemoLng())
+        sendPark()
+        createChests()
+        showChestOnMap()
+        createDoor()
+        setObtainedKey('N')
+        showDoorOnMap()
+        setChestNum(1)
+        x,y = chestsCoords[0]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        hint(getDemoLat(), getDemoLng())
+        # print getDemoLat()
+        # print getDemoLng()
+        
         del all_users[:]
         for user in users:
             all_users.append({        
@@ -221,29 +199,31 @@ def start_game_demo(data):
             models.db.session.add(usr)
             models.db.session.commit()
             
-            # usr = models.progress(json['name'], 'Y', )
-            # models.db.session.add(usr)
-            # models.db.session.commit()
+            park = models.progress(json['name'], 'Y', getParkName(), json['id'], datetime.datetime.now(), '')
+            models.db.session.add(park)
+            models.db.session.commit()
             
-            # print "added TO DATABASe!"
-        socketio.emit('playerLoc', {
-           'demoLat': getDemoLat(),
-           'demoLng': getDemoLng(),
-        });
-        findNearestPark(getDemoLat(), getDemoLng())
-        sendPark()
-        createChests()
-        showChestOnMap()
-        createDoor()
-        setObtainedKey('N')
-        showDoorOnMap()
-        setChestNum(1)
-        x,y = chestsCoords[0]
-        setCurrChestLat(x)
-        setCurrChestLng(y)
-        hint(getDemoLat(), getDemoLng())
-        # print getDemoLat()
-        # print getDemoLng()
+            chest = models.chestInfo(json['name'], 1, chestsCoords[0], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 2, chestsCoords[1], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 3, chestsCoords[2], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 4, chestsCoords[3], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 5, chestsCoords[4], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            
+            door = models.doorInfo(json['name'], (getDoorLat(), getDoorLng()), 'Y', json['id'])
+            models.db.session.add(door)
+            models.db.session.commit()
+        
+        
     else:
         print "location not shared"
     
@@ -448,7 +428,9 @@ def findNearestPark(playerLat, playerLng):
     json_body = response.json()
     # print json_body["results"][0]["geometry"]["location"]["lat"]
     # print json_body["results"][0]["geometry"]["location"]["lng"]
-    print json_body["results"][0]["name"]
+    # print "park name"
+    # print json_body["results"][0]["name"]
+    setParkName(json_body["results"][0]["name"])
     # print json_body
     setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
     # print "park coords"
@@ -510,6 +492,9 @@ def getDoorLat():
 
 def getDoorLng():
     return doorLng
+    
+def getDoorCoords():
+    return (getDoorLat(), getDoorLng())
     
     
 def showDoorOnMap():
