@@ -1,11 +1,10 @@
 # models.py
 import flask_sqlalchemy
-import app
+# import app
 import os
 
-# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'  
-db = flask_sqlalchemy.SQLAlchemy(app.app)
+# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')exit
+db = flask_sqlalchemy.SQLAlchemy()
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key
@@ -33,7 +32,21 @@ class chestInfo(db.Model):
         self.status = s
         self.fbID = f
     def __repr__(self): # what's __repr__?
-        return '<Users Chest: %s>' % self.user    
+        return '<Users Chest: %s>' % self.user  
+        
+class doorInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # key
+    user = db.Column(db.String(150))
+    coordinates = db.Column(db.String(150))
+    statusLocked = db.Column(db.String(100))
+    fbID = db.Column(db.String(500))
+    def __init__(self, u, xy, s,f):
+        self.user = u
+        self.coordinates = xy
+        self.statusLocked = s
+        self.fbID = f
+    def __repr__(self): # what's __repr__?
+        return '<Users Chest: %s>' % self.user 
 
 class progress(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key

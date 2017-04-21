@@ -11,14 +11,18 @@ import math
 import urllib2
 import bearing
 import points
-import models
+import datetime
 
+import models
 
 
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = flask_sqlalchemy.SQLAlchemy(app)
+models.db.init_app(app)
 
 all_users = [];
 chestsCoords = []
@@ -67,6 +71,13 @@ def getParkLat():
 def getParkLng():
     return parkLng
     
+def setParkName(x):
+    global parkName
+    parkName = x
+    
+def getParkName():
+    return parkName
+    
 def setCurrChestLat(x):
     global chestLatitude
     chestLatitude = x
@@ -80,6 +91,9 @@ def getCurrChestLat():
     
 def getCurrChestLng():
     return chestLongitude
+    
+def getCurrChestCoords():
+    return (chestLatitude, chestLongitude)
     
 def setChestNum(x):
     global chestNum
@@ -129,9 +143,10 @@ def on_location(data):
 @socketio.on('startDemo')
 def start_game_demo(data):
     del chestsCoords[:]
-    users = models.Users.query.all()
+    # users = models.Users.query.all()
+    users = models.db.session.query(models.Users).all()
     
-    # print "Test"
+    # # print "Test"
     if (lat != 0 and lng != 0):
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
         json = response.json()
@@ -139,6 +154,27 @@ def start_game_demo(data):
         print json['name']
         
         
+        
+        
+            # print "added TO DATABASe!"
+        socketio.emit('playerLoc', {
+           'demoLat': getDemoLat(),
+           'demoLng': getDemoLng(),
+        });
+        findNearestPark(getDemoLat(), getDemoLng())
+        sendPark()
+        createChests()
+        showChestOnMap()
+        createDoor()
+        setObtainedKey('N')
+        showDoorOnMap()
+        setChestNum(1)
+        x,y = chestsCoords[0]
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        hint(getDemoLat(), getDemoLng())
+        # print getDemoLat()
+        # print getDemoLng()
         
         del all_users[:]
         for user in users:
@@ -158,28 +194,36 @@ def start_game_demo(data):
                     'picture': json['picture']['data']['url'],
                     'media': 'FB',
                 })
+    # users = models.db.session.query(models.Users).all()
             usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
             models.db.session.add(usr)
             models.db.session.commit()
-            print "added TO DATABASe!"
-        socketio.emit('playerLoc', {
-           'demoLat': getDemoLat(),
-           'demoLng': getDemoLng(),
-        });
-        findNearestPark(getDemoLat(), getDemoLng())
-        sendPark()
-        createChests()
-        showChestOnMap()
-        createDoor()
-        setObtainedKey('N')
-        showDoorOnMap()
-        setChestNum(1)
-        x,y = chestsCoords[0]
-        setCurrChestLat(x)
-        setCurrChestLng(y)
-        hint(getDemoLat(), getDemoLng())
-        # print getDemoLat()
-        # print getDemoLng()
+            
+            park = models.progress(json['name'], 'Y', getParkName(), json['id'], datetime.datetime.now(), '')
+            models.db.session.add(park)
+            models.db.session.commit()
+            
+            chest = models.chestInfo(json['name'], 1, chestsCoords[0], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 2, chestsCoords[1], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 3, chestsCoords[2], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 4, chestsCoords[3], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 5, chestsCoords[4], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            
+            door = models.doorInfo(json['name'], (getDoorLat(), getDoorLng()), 'Y', json['id'])
+            models.db.session.add(door)
+            models.db.session.commit()
+        
+        
     else:
         print "location not shared"
     
@@ -384,6 +428,9 @@ def findNearestPark(playerLat, playerLng):
     json_body = response.json()
     # print json_body["results"][0]["geometry"]["location"]["lat"]
     # print json_body["results"][0]["geometry"]["location"]["lng"]
+    # print "park name"
+    # print json_body["results"][0]["name"]
+    setParkName(json_body["results"][0]["name"])
     # print json_body
     setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
     # print "park coords"
@@ -445,6 +492,9 @@ def getDoorLat():
 
 def getDoorLng():
     return doorLng
+    
+def getDoorCoords():
+    return (getDoorLat(), getDoorLng())
     
     
 def showDoorOnMap():
