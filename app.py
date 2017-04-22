@@ -364,6 +364,10 @@ def updateChestStatus():
         socketio.emit('changeIcon5', {
         
         });
+        x,y = getDoorCoords()
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        
         setObtainedKey('Y')
         unlockDoor()
     # if (chest1 == 'Y' and chest2 == 'N'):
@@ -402,11 +406,7 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
                 
             });
         else:
-            print "not at door"
-            socketio.emit('notyet',{
-                
-            });
-            
+            hint(playerLat, playerLng)
     else:
         if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):
             print "found it"
