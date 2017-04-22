@@ -3,6 +3,7 @@ import flask_sqlalchemy
 # import app
 import os
 
+
 # app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')exit
 db = flask_sqlalchemy.SQLAlchemy()
 

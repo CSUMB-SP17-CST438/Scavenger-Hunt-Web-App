@@ -36,7 +36,7 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1875922112681168";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     
@@ -358,12 +358,22 @@
             socket.emit('up', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           $("#down").click(function(){
               // alert("The start button was clicked.");
             socket.emit('down', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           $("#right").click(function(){
               // alert("The start button was clicked.");
@@ -372,6 +382,11 @@
               
             });
             
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
+            
             
           });
           $("#left").click(function(){
@@ -379,6 +394,11 @@
             socket.emit('left', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           socket.on('hideStartButton', (data) => {
             $('#start').hide();
