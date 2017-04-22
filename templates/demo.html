@@ -407,11 +407,11 @@
             $('#left').show();
             $('#right').show();
             $('#down').show();
-          })
+          });
           socket.on('showKeyButton', (data) => {
             $('#update').hide();
             $('#key').show();
-          })
+          });
           
           
           
@@ -422,46 +422,51 @@
             $('#chest11').show();
             alert("YOU FOUND A CHEST 4 MORE TO GO!");
             
-        })
+        });
         socket.on('changeIcon2', (data) => {
           
           $('#chest2').hide();
             $('#chest21').show();
              alert("YOU FOUND A CHEST 3 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon3', (data) => {
           
           $('#chest3').hide();
             $('#chest31').show();
              alert("YOU FOUND A CHEST 2 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon4', (data) => {
           
           $('#chest4').hide();
             $('#chest41').show();
              alert("YOU FOUND A CHEST 1 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon5', (data) => {
           
           $('#chest5').hide();
             $('#chest51').show();
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
-        })
+        });
         
         socket.on('youwin', (data) => {
-          alert(" DOOR'S UNLOCKED YOU WON! ");
-        })
+          alert(" DOOR'S UNLOCKED YOU WON! ")
+        });
         
         socket.on('notyet',(data)=> {
           alert("NOT THE DOOR, GO TO THE DOOR ICON!")
-        })
+        });
           
           
           
           
           
           
-          
+          var myVar = setInterval(myTimer, 1000);
+
+            function myTimer() {
+              alert("WORKING");
+                  
+          }
           
           
           
