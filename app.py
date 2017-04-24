@@ -248,29 +248,29 @@ def start_game_demo(data):
                     tempCoord = tempX, tempY
                     chestsCoords.append(tempCoord)
                 for c in chst:
-                    print "chest status"
-                    print c.status
+                    # print "chest status"
+                    # print c.status
                     if (c.status == 'Y'):
-                        print "yes"
-                        print c.chestNumber
+                        # print "yes"
+                        # print c.chestNumber
                         if (c.chestNumber == 1):
-                            socketio.emit('changeIcon1', {
+                            socketio.emit('changeChest1', {
         
                             });
                         elif (c.chestNumber == 2):
-                            socketio.emit('changeIcon2', {
+                            socketio.emit('changeChest2', {
         
                             });
                         elif (c.chestNumber == 3):
-                            socketio.emit('changeIcon3', {
+                            socketio.emit('changeChest3', {
         
                             });
                         elif (c.chestNumber == 4):
-                            socketio.emit('changeIcon2', {
+                            socketio.emit('changeChest44', {
         
                             });
                         elif (c.chestNumber == 5):
-                            socketio.emit('changeIcon2', {
+                            socketio.emit('changeChest5', {
         
                             });
                 for c in chst:

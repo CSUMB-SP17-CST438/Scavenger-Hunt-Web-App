@@ -429,6 +429,33 @@
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
         })
         
+        socket.on('changeChest1', (data) => {
+          
+          $('#chest1').hide();
+            $('#chest11').show();
+            
+        })
+        socket.on('changeChest2', (data) => {
+          
+          $('#chest2').hide();
+            $('#chest21').show();
+        })
+        socket.on('changeChest3', (data) => {
+          
+          $('#chest3').hide();
+            $('#chest31').show();
+        })
+        socket.on('changeChest4', (data) => {
+          
+          $('#chest4').hide();
+            $('#chest41').show();
+        })
+        socket.on('changeChest5', (data) => {
+          
+          $('#chest5').hide();
+            $('#chest51').show();
+        })
+        
         socket.on('youwin', (data) => {
           alert(" DOOR'S UNLOCKED YOU WON! ");
         })
