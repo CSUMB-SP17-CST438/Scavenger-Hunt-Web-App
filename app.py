@@ -189,7 +189,7 @@ def start_game_demo(data):
         flag = False;
         print json['name']
         
-        
+        setFBid(json['id'])
         
         
             # print "added TO DATABASe!"
@@ -247,6 +247,32 @@ def start_game_demo(data):
                     tempY = float(tempY)
                     tempCoord = tempX, tempY
                     chestsCoords.append(tempCoord)
+                for c in chst:
+                    print "chest status"
+                    print c.status
+                    if (c.status == 'Y'):
+                        print "yes"
+                        print c.chestNumber
+                        if (c.chestNumber == 1):
+                            socketio.emit('changeIcon1', {
+        
+                            });
+                        elif (c.chestNumber == 2):
+                            socketio.emit('changeIcon2', {
+        
+                            });
+                        elif (c.chestNumber == 3):
+                            socketio.emit('changeIcon3', {
+        
+                            });
+                        elif (c.chestNumber == 4):
+                            socketio.emit('changeIcon2', {
+        
+                            });
+                        elif (c.chestNumber == 5):
+                            socketio.emit('changeIcon2', {
+        
+                            });
                 for c in chst:
                     if (c.status == 'N'):
                         # cX = Decimal(c.coordinates[1:19])
@@ -436,6 +462,12 @@ def updateChestStatus():
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
+        # models.progress.query.filter_by(fbID=getFBid()).first();
+        updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=1).first()
+        # print updateChest
+        # print "chest updated ^"
+        updateChest.status = 'Y'
+        models.db.session.commit()
     elif (getChestNum() == 2):
         socketio.emit('changeIcon2', {
         
@@ -445,6 +477,11 @@ def updateChestStatus():
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
+        updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=2).first()
+        # print updateChest
+        # print "chest updated ^"
+        updateChest.status = 'Y'
+        models.db.session.commit()
     elif (getChestNum() == 3):
         socketio.emit('changeIcon3', {
         
@@ -454,6 +491,11 @@ def updateChestStatus():
         setCurrChestLat(x)
         setCurrChestLng(y)
         setObtainedKey('N')
+        updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=3).first()
+        # print updateChest
+        # print "chest updated ^"
+        updateChest.status = 'Y'
+        models.db.session.commit()
     elif (getChestNum() == 4):
         socketio.emit('changeIcon4', {
         
@@ -462,11 +504,21 @@ def updateChestStatus():
         x,y = chestsCoords[4]
         setCurrChestLat(x)
         setCurrChestLng(y)
+        updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=4).first()
+        # print updateChest
+        # print "chest updated ^"
+        updateChest.status = 'Y'
+        models.db.session.commit()
     elif (getChestNum() == 5):
         socketio.emit('changeIcon5', {
         
         });
         setObtainedKey('Y')
+        updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=5).first()
+        # print updateChest
+        # print "chest updated ^"
+        updateChest.status = 'Y'
+        models.db.session.commit()
         unlockDoor()
     # if (chest1 == 'Y' and chest2 == 'N'):
     #     x,y = chestsCoords[0]
@@ -503,6 +555,11 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
             socketio.emit('youwin',{
                 
             });
+            updateDoor = models.doorLat.query.filter_by(fbID=getFBid()).first()
+            # print updateDoor
+            # print "door updated ^"
+            updateDoor.statusLocked = 'N'
+            models.db.session.commit()
         else:
             print "not at door"
             socketio.emit('notyet',{
