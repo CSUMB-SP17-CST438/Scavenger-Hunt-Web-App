@@ -12,6 +12,7 @@ import urllib2
 import bearing
 import points
 import datetime
+from decimal import *
 
 import models
 
@@ -21,7 +22,7 @@ socketio = flask_socketio.SocketIO(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = flask_sqlalchemy.SQLAlchemy(app)
+db = flask_sqlalchemy.SQLAlchemy(app)
 models.db.init_app(app)
 
 all_users = [];
@@ -34,6 +35,13 @@ parkLat = 0.0
 parkLng = 0.0
 
 movingValue = 0.000065
+
+def setFBid(x):
+    global fbID
+    fbID = x
+    
+def getFBid():
+    return fbID
 
 def setCoords(x, y):
     global lat
@@ -122,7 +130,35 @@ def demo():
 def on_connect():
     print "SOMEONE CONNECTED"
     
-
+@socketio.on('fbConnect')
+def on_fbConnect(data):
+    response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+    json = response.json()
+    if (data['facebook_user_token'] != ''):
+        print "Fb connect"
+        print json['name']
+        setFBid(json['id'])
+        print json['id']
+        print getFBid()
+        print "fb id above"
+        userProg = models.progress.query.filter_by(fbID=getFBid()).first();
+        print userProg
+        if (userProg.gameSession == 'Y'):
+            print "yes"
+            if (latDemo != 0 and lngDemo != 0):
+                print "location"
+                socketio.emit('playerLoc', {
+                   'demoLat': getDemoLat(),
+                   'demoLng': getDemoLng(),
+                });
+                setParkName(userProg.parkName)
+                print getParkName()
+                print "testing fb"
+                # x,y = userProg.
+                # setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
+              
+    else:
+        print "not fb connect"
 
 @socketio.on('disconnect')
 def on_disconnect():
@@ -134,8 +170,8 @@ def on_location(data):
     # lng = data['coords']['lng']
     setCoords(data['coords']['lat'], data['coords']['lng'])
     setDemoCoords(data['coords']['lat'], data['coords']['lng'])
-    # print getLat()
-    # print getLng()
+    print getDemoLat()
+    print getDemoLng()
     # hint()
     # findNearestPark()
     # sendPark()
@@ -147,7 +183,7 @@ def start_game_demo(data):
     users = models.db.session.query(models.Users).all()
     
     # # print "Test"
-    if (lat != 0 and lng != 0):
+    if (latDemo != 0 and lngDemo != 0):
         response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
         json = response.json()
         flag = False;
@@ -161,18 +197,18 @@ def start_game_demo(data):
            'demoLat': getDemoLat(),
            'demoLng': getDemoLng(),
         });
-        findNearestPark(getDemoLat(), getDemoLng())
-        sendPark()
-        createChests()
-        showChestOnMap()
-        createDoor()
-        setObtainedKey('N')
-        showDoorOnMap()
-        setChestNum(1)
-        x,y = chestsCoords[0]
-        setCurrChestLat(x)
-        setCurrChestLng(y)
-        hint(getDemoLat(), getDemoLng())
+        # findNearestPark(getDemoLat(), getDemoLng())
+        # sendPark()
+        # createChests()
+        # showChestOnMap()
+        # createDoor()
+        # setObtainedKey('N')
+        # showDoorOnMap()
+        # setChestNum(1)
+        # x,y = chestsCoords[0]
+        # setCurrChestLat(x)
+        # setCurrChestLng(y)
+        # hint(getDemoLat(), getDemoLng())
         # print getDemoLat()
         # print getDemoLng()
         
@@ -187,8 +223,70 @@ def start_game_demo(data):
         
         for user in users:
             if (user.user == json['name']):
+                print "already started"
+                prk = models.parkInfo.query.filter_by(fbID=json['id']).first();
+                setParkName(prk.parkName)
+                # print "park coords"
+                # print prk.coordinates
+                pX, pY = prk.coordinates.strip('()').split(',')
+                pX = float(pX)
+                pY = float(pY)
+                # pX = float(prk.coordinates[1:11])
+                # pY = float(prk.coordinates[12:24])
+                setParkCoords(pX, pY)
+                sendPark()
+                chst = models.chestInfo.query.filter_by(fbID=json['id']).all();
+                dr = models.doorInfo.query.filter_by(fbID=json['id']).first();
+                for c in chst:
+                    print "chests"
+                    print c.coordinates
+                    # tempX = Decimal(c.coordinates[1:19])
+                    # tempY = Decimal(c.coordinates[20:39])
+                    tempX, tempY = c.coordinates.strip('()').split(',')
+                    tempX = float(tempX)
+                    tempY = float(tempY)
+                    tempCoord = tempX, tempY
+                    chestsCoords.append(tempCoord)
+                for c in chst:
+                    if (c.status == 'N'):
+                        # cX = Decimal(c.coordinates[1:19])
+                        # cY = Decimal(c.coordinates[20:39])
+                        cX, cY = c.coordinates.strip('()').split(',')
+                        cX = float(cX)
+                        cY = float(cY)
+                        # cX, cY = c.coordinates
+                        setChestNum(c.chestNumber)
+                        # if (c.chestNumber != 5):
+                        #     setObtainedKey('N')
+                        setCurrChestLat(cX)
+                        setCurrChestLng(cY)
+                        setObtainedKey('N')
+                        break
+                    elif (c.chest == 5 and dr.statusLocked == 'Y'):
+                        setObtainedKey('Y')
+                showChestOnMap()
+                dX, dY = dr.coordinates.strip('()').split(',')
+                dX = float(dX)
+                dY = float(dY)
+                setDoorLat(dX)
+                setDoorLng(dY)
+                showDoorOnMap()
+                hint(getDemoLat(), getDemoLng())
+                
                 flag = True;
         if (flag == False):
+            findNearestPark(getDemoLat(), getDemoLng())
+            sendPark()
+            createChests()
+            showChestOnMap()
+            createDoor()
+            setObtainedKey('N')
+            showDoorOnMap()
+            setChestNum(1)
+            x,y = chestsCoords[0]
+            setCurrChestLat(x)
+            setCurrChestLng(y)
+            hint(getDemoLat(), getDemoLng())
             all_users.append({
                     'name': json['name'],        
                     'picture': json['picture']['data']['url'],
@@ -199,7 +297,7 @@ def start_game_demo(data):
             models.db.session.add(usr)
             models.db.session.commit()
             
-            park = models.progress(json['name'], 'Y', getParkName(), json['id'], datetime.datetime.now(), '')
+            park = models.progress(json['name'], 'Y', json['id'], datetime.datetime.now(), '')
             models.db.session.add(park)
             models.db.session.commit()
             
@@ -221,6 +319,10 @@ def start_game_demo(data):
             
             door = models.doorInfo(json['name'], (getDoorLat(), getDoorLng()), 'Y', json['id'])
             models.db.session.add(door)
+            models.db.session.commit()
+            
+            park = models.parkInfo(json['name'], getParkName(), (getParkLat(), getParkLng()), json['id'])
+            models.db.session.add(park)
             models.db.session.commit()
         
         

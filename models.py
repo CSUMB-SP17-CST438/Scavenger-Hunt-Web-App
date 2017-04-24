@@ -3,7 +3,10 @@ import flask_sqlalchemy
 # import app
 import os
 
-# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')exit
+# app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
+# app.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = flask_sqlalchemy.SQLAlchemy(app.app)
 db = flask_sqlalchemy.SQLAlchemy()
 
 class Users(db.Model):
@@ -47,20 +50,32 @@ class doorInfo(db.Model):
         self.fbID = f
     def __repr__(self): # what's __repr__?
         return '<Users Chest: %s>' % self.user 
+        
+class parkInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # key
+    user = db.Column(db.String(150))
+    parkName = db.Column(db.String(150))
+    coordinates = db.Column(db.String(150))
+    fbID = db.Column(db.String(500))
+    def __init__(self, u, p, xy, f):
+        self.user = u
+        self.parkName = p
+        self.coordinates = xy
+        self.fbID = f
+    def __repr__(self): # what's __repr__?
+        return '<Users Chest: %s>' % self.user 
 
 class progress(db.Model):
     id = db.Column(db.Integer, primary_key=True) # key
     user = db.Column(db.String(150))
     gameSession = db.Column(db.String(100))
-    parkName = db.Column(db.String(150))
     fbID = db.Column(db.String(500))
     start = db.Column(db.String(150))
     end = db.Column(db.String(150))
 
-    def __init__(self, u, g,p,f,s,e):
+    def __init__(self, u, g, f,s,e):
         self.user = u
         self.gameSession = g
-        self.parkName = p
         self.fbID = f
         self.start = s
         self.end = e

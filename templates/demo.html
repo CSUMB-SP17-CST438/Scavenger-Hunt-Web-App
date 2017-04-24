@@ -36,7 +36,7 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1875922112681168";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     
@@ -88,9 +88,9 @@
          <div class="col-xs-6 col-md-4">
 
            <!--<div id="facebook"></div>-->
-           <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
-
-
+           <!--<div id="fb-button" class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>-->
+          <div class="fb-login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
+  
            <button id="rules" type="button" class="btn btn-info" >Directions</button>\
          </div>
       
@@ -280,7 +280,7 @@
           // console.log("testing");
             var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             var marker = new google.maps.Marker({
-              position: {lat: data['chestLat'], lng: data['chestLng']},
+              position: {lat: parseFloat(data['chestLat']), lng: parseFloat(data['chestLng'])},
               map: map,
               title: 'Chest',
               icon: image
@@ -315,6 +315,7 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
+        
         $("#start").click(function(){
               // alert("The start button was clicked.");
               FB.getLoginStatus(function(response) {
