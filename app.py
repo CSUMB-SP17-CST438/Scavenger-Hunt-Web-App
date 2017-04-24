@@ -13,6 +13,7 @@ import bearing
 import points
 import datetime
 from decimal import *
+import time
 
 import models
 
@@ -238,8 +239,8 @@ def start_game_demo(data):
                 chst = models.chestInfo.query.filter_by(fbID=json['id']).all();
                 dr = models.doorInfo.query.filter_by(fbID=json['id']).first();
                 for c in chst:
-                    print "chests"
-                    print c.coordinates
+                    # print "chests"
+                    # print c.coordinates
                     # tempX = Decimal(c.coordinates[1:19])
                     # tempY = Decimal(c.coordinates[20:39])
                     tempX, tempY = c.coordinates.strip('()').split(',')
@@ -266,13 +267,16 @@ def start_game_demo(data):
         
                             });
                         elif (c.chestNumber == 4):
-                            socketio.emit('changeChest44', {
+                            socketio.emit('changeChest4', {
         
                             });
                         elif (c.chestNumber == 5):
                             socketio.emit('changeChest5', {
         
                             });
+                            if (dr.statusLocked == 'Y'):
+                                setObtainedKey('Y')
+                                print "yes to the key"
                 for c in chst:
                     if (c.status == 'N'):
                         # cX = Decimal(c.coordinates[1:19])
@@ -287,9 +291,11 @@ def start_game_demo(data):
                         setCurrChestLat(cX)
                         setCurrChestLng(cY)
                         setObtainedKey('N')
+                        hint(getDemoLat(), getDemoLng())
                         break
-                    elif (c.chest == 5 and dr.statusLocked == 'Y'):
-                        setObtainedKey('Y')
+                    # elif (c.chestNumber == 5 and dr.statusLocked == 'Y'):
+                    #     setObtainedKey('Y')
+                    #     print "yes to the key"
                 showChestOnMap()
                 dX, dY = dr.coordinates.strip('()').split(',')
                 dX = float(dX)
@@ -297,7 +303,7 @@ def start_game_demo(data):
                 setDoorLat(dX)
                 setDoorLng(dY)
                 showDoorOnMap()
-                hint(getDemoLat(), getDemoLng())
+                
                 
                 flag = True;
         if (flag == False):
@@ -323,7 +329,7 @@ def start_game_demo(data):
             models.db.session.add(usr)
             models.db.session.commit()
             
-            park = models.progress(json['name'], 'Y', json['id'], datetime.datetime.now(), '')
+            park = models.progress(json['name'], 'Y', json['id'], str(datetime.datetime.now()).split('.')[0], '')
             models.db.session.add(park)
             models.db.session.commit()
             
@@ -520,6 +526,11 @@ def updateChestStatus():
         updateChest.status = 'Y'
         models.db.session.commit()
         unlockDoor()
+        print "no arrow"
+        arrow = ''
+        socketio.emit('arrow', {
+            'arrowDir': arrow
+        })
     # if (chest1 == 'Y' and chest2 == 'N'):
     #     x,y = chestsCoords[0]
     #     setCurrChestLat(x)
@@ -555,11 +566,16 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
             socketio.emit('youwin',{
                 
             });
-            updateDoor = models.doorLat.query.filter_by(fbID=getFBid()).first()
+            updateDoor = models.doorInfo.query.filter_by(fbID=getFBid()).first()
             # print updateDoor
             # print "door updated ^"
             updateDoor.statusLocked = 'N'
             models.db.session.commit()
+            prog = models.progress.query.filter_by(fbID=getFBid()).first()
+            prog.end = str(datetime.datetime.now()).split('.')[0]
+            models.db.session.commit()
+            postToFacebook()
+            deleteData()
         else:
             print "not at door"
             socketio.emit('notyet',{
@@ -575,6 +591,66 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
             
         else:
             hint(playerLat, playerLng)
+            
+def postToFacebook():
+    print "posted"
+    prog = models.progress.query.filter_by(fbID=getFBid()).first()
+    start = prog.start
+    end = prog.end
+    
+    print start
+    
+    fmt = '%Y-%m-%d %H:%M:%S'
+    d1 = datetime.datetime.strptime(start, fmt)
+    d2 = datetime.datetime.strptime(end, fmt)
+    
+    d1_ts = time.mktime(d1.timetuple())
+    d2_ts = time.mktime(d2.timetuple())
+
+    totalMin = int(d2_ts-d1_ts) / 60
+    print "total min"
+    print totalMin
+    
+def deleteData():
+    print "deleted from db"
+    usr = models.Users.query.filter_by(fbID=getFBid()).first();
+    models.db.session.delete(usr)
+    models.db.session.commit()
+    
+    prg = models.progress.query.filter_by(fbID=getFBid()).first();
+    models.db.session.delete(prg)
+    models.db.session.commit()
+    
+    prk = models.parkInfo.query.filter_by(fbID=getFBid()).first();
+    models.db.session.delete(prk)
+    models.db.session.commit()
+    
+    chst = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=1).first();
+    models.db.session.delete(chst)
+    models.db.session.commit()
+    chst = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=2).first();
+    models.db.session.delete(chst)
+    models.db.session.commit()
+    chst = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=3).first();
+    models.db.session.delete(chst)
+    models.db.session.commit()
+    chst = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=4).first();
+    models.db.session.delete(chst)
+    models.db.session.commit()
+    chst = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=5).first();
+    models.db.session.delete(chst)
+    models.db.session.commit()
+    
+    dr = models.doorInfo.query.filter_by(fbID=getFBid()).first();
+    models.db.session.delete(dr)
+    models.db.session.commit()
+    
+    socketio.emit('restart', {
+        
+    });
+    socketio.emit('resetting', {
+        
+    })
         
 def unlockDoor():
     socketio.emit('showKeyButton', {
