@@ -5,18 +5,18 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
     
-    <title>Geolocation</title>
+    <title>KEY QUEST</title>
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     
     
-    <style type="text/css">
+   <style type="text/css">
       
       h3{
       color:white;
     }
-    h1{
+    h2{
        text-align:center;
     }
     
@@ -25,7 +25,23 @@
     margin: 0 auto;
     text-align:left;
     }
+    
+    .dropdown{
+    
+    margin-left:auto;
+    
+    }
+    .title{
+      background-color:black;
+      color:white;
+    }
+    
+    #stuff{
+      padding:20px;
+    }
     </style>
+    
+    
     
     
     
@@ -39,27 +55,16 @@
 
   //maria's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
 
-  //sam's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
   
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     
-      <div id = "splash">
-      <div id = row>
-        <h1>Welcome to TITLE_OF_GAME</h1>
-        <div class="col-md-2 col-centered text-center">
       
-      <strong>OBJECTIVE:</strong><p>Find all 5 chests to unlock the door.</p> 
-      <strong>DIRECTIONS:</strong><p>Login with Facebook and relocate to the stated park.</p> 
-      
-      <button id="accept" type="button" class="btn btn-success">Understood!</button>
-       </div>
-      </div>
-    </div>
     
     
     
-    <div id = "playArea" style = "display: none">
+    <div id = "playArea" >
     
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container">
@@ -87,7 +92,7 @@
          
        </div>
         <div class="col-xs-6 col-md-4">
-          <h3>GAME TITLE</h3>
+          <h3>KEY QUEST</h3>
         </div>
          <div class="col-xs-6 col-md-4">
 
@@ -95,7 +100,30 @@
            <!--<div id="fb-button" class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>-->
           <div class="fb-login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
   
-           <button id="rules" type="button" class="btn btn-info" >Directions</button>\
+           <div class="container">
+
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-left">
+      
+      <h2 class = "title">  KEY QUEST</h2>
+      <div id= "stuff">
+      
+      <strong>OBJECTIVE:</strong><li>Find all 5 chests to unlock the door.</li> 
+      <strong>DIRECTIONS:</strong>
+      <ul><li>Login with Facebook</li> 
+      <li>We'll locate your location.</li>
+      <li>Direct you to nearest park.</li>
+      <li>Collect 5 chests to unlock door. </li>
+      <li>WIN.</li>
+      </ul>
+      </div>
+      
+     
+    </ul>
+  </div>
+</div>
          </div>
       
       
@@ -368,19 +396,7 @@
                 
               });
               
-        $("#accept").click(function(){
-          $('#splash').hide();
-            $('#playArea').show();
-            
-          
-        });      
-        
-         $("#rules").click(function(){
-          $('#playArea').hide();
-            $('#splash').show();
-            
-          
-        }); 
+       
         
           $("#up").click(function(){
               // alert("The start button was clicked.");
