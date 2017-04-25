@@ -253,7 +253,7 @@ def start_game(data):
         
 @socketio.on('updateDemoLocation')
 def update_player_demo(data):
-    # print "update demo"
+    print "update demo"
     if (getObtainedKey() == 'Y'):
         checkDistance(getDoorLat(), getDoorLng(), getDemoLat(), getDemoLng())
     else:
@@ -261,6 +261,7 @@ def update_player_demo(data):
         
 @socketio.on('updateLocation')
 def update_player(data):
+    print "UPDATE LOCATION"
     setCoords(data['coords']['lat'], data['coords']['lng'])
     socketio.emit('playerLoc', {
         'lat': getLat(),
@@ -282,6 +283,7 @@ def handle_my_custom_event(data):
 def testing(data):
     print data['testVar']['lat']
     print data['testVar']['lng']
+    
     
 
 def hint(playerLat, playerLng):

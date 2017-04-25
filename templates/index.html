@@ -9,24 +9,43 @@
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">this is for mobile-->
+    
     
     <style type="text/css">
-    
-    h3{
+      
+      h3{
       color:white;
     }
-      
+    h1{
+       text-align:center;
+    }
+    
+          .col-centered{
+    float: none;
+    margin: 0 auto;
+    text-align:left;
+    }
     </style>
     
     
+    
   </head>
-  
-  
-  
   <body>
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    
+      
     
     
+    
+    
+    <div id = "playArea">
     
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
   <div class="container">
@@ -54,9 +73,31 @@
          
        </div>
         <div class="col-xs-6 col-md-4">
-          <h3>GAME TITLE</h3>
+          <h3>Picachu</h3>
         </div>
-         <div class="col-xs-6 col-md-4"></div>
+         <div class="col-xs-6 col-md-4">
+
+           <!--<div id="facebook"></div>-->
+           <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+
+            <div class="container">
+
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      
+      <h1>Welcome to TITLE_OF_GAME</h1>
+      
+      <strong>OBJECTIVE:</strong><p>Find all 5 chests to unlock the door.</p> 
+      <strong>DIRECTIONS:</strong><p>Login with Facebook and relocate to the stated park.</p> 
+      
+     
+    </ul>
+  </div>
+</div>
+           
+         </div>
       
       
     </div>
@@ -67,18 +108,22 @@
   
   
   </nav>
-      
-    <div id="map"></div>
     
     
- <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+    
+    
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
       
       
    
       
       
           <div class="row">
-      <div class="col-xs-3 col-md-4"></div>
+      <div class="col-xs-3 col-md-4">
+        
+        
+        
+      </div>
          <div class="col-xs-3 col-md-4">
             
            <p class="text-center">
@@ -99,9 +144,20 @@
       
       
     </nav>
-   
+    
+    </div>  
     
     
+    
+<div id="map"></div>
+
+    
+    
+
+    
+    
+    
+
     <script type="text/javascript" src="/static/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -128,10 +184,11 @@
         var markers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 15,
+          zoom: 13,
           mapTypeId: 'satellite',
         });
         
+
         var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
@@ -145,18 +202,22 @@
             socket.emit('geolocation', {
               'coords': pos,
             });
+            
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
             $('#update').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
+              socket.emit('updateDemoLocation', {
+                
+                
               });
+              
+              
             });
             $('#key').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
+              socket.emit('updateDemoLocation', {
+                
               });
             });
           }, function() {
@@ -183,36 +244,17 @@
               fillOpacity: 0.35,
               map: map,
               center: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
-              radius: 130
+              radius: 140
             });
-        })
-        
-        socket.on('changeIcon1', (data) => {
           
-          $('#chest1').hide();
-            $('#chest11').show();
         })
-        
-        
-        
         
         socket.on('door', (data) => {
           // console.log("testing");
-          var image = {
-            url: '../static/chests/door.png',
-            // This marker is 20 pixels wide by 32 pixels high.
-            scaledSize: new google.maps.Size(40, 50),
-            // The origin for this image is (0, 0).
-            origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            anchor: new google.maps.Point(0, 0)
-          };
-
             var marker = new google.maps.Marker({
               position: {lat: data['doorLat'], lng: data['doorLng']},
               map: map,
-              title: 'Door',
-              icon: image,
+              title: 'Door'
             });
             // document.getElementById('start').style.visibility = 'hidden';
         })
@@ -225,7 +267,7 @@
             markers = [];
           // console.log("testing");
             var marker = new google.maps.Marker({
-              position: {lat: data['lat'], lng: data['lng']},
+              position: {lat: data['demoLat'], lng: data['demoLng']},
               map: map,
               title: 'Player'
             });
@@ -233,9 +275,9 @@
             // document.getElementById('start').style.visibility = 'hidden';
         })
         
+        
         socket.on('chests', (data) => {
           // console.log("testing");
-            // var image = "../static/chests/foundChest.png";
             var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             var marker = new google.maps.Marker({
               position: {lat: data['chestLat'], lng: data['chestLng']},
@@ -256,6 +298,7 @@
             });
             
         })
+        
       }
       
       
@@ -272,33 +315,48 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
-          $("#start").click(function(){
+        $("#start").click(function(){
               // alert("The start button was clicked.");
-            socket.emit('start', {
-              
-            });
-            
-            var myVar = setInterval(myTimer, 50000);//set to 30 seconds
-
-            function myTimer() {
-              //alert("WORKING");
-              socket.emit('updateDemoLocation', {
+              FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                  // the user is logged in and has authenticated your
+                  // app, and response.authResponse supplies
+                  // the user's ID, a valid access token, a signed
+                  // request, and the time the access token 
+                  // and signed request each expire
+                  // var uid = response.authResponse.userID;
+                  var accessToken = response.authResponse.accessToken;
+                  socket.emit('startDemo', {
+                    'facebook_user_token': accessToken,
+                  });
+                } else if (response.status === 'not_authorized') {
+                  // the user is logged in to Facebook, 
+                  // but has not authenticated your app
+                } else {
+                  // the user isn't logged in to Facebook.
+                }
+             });
                 
-                
-              });//constantly checking for changes
+              });
               
-                  
-          }
-            
-          });
+             
+      
+        
+          
+          
+          
+         
           socket.on('hideStartButton', (data) => {
             $('#start').hide();
             $('#update').show();
-          })
+
+          });
           socket.on('showKeyButton', (data) => {
             $('#update').hide();
             $('#key').show();
-          })
+          });
+          
+          
           
           
           socket.on('changeIcon1', (data) => {
@@ -307,56 +365,65 @@
             $('#chest11').show();
             alert("YOU FOUND A CHEST 4 MORE TO GO!");
             
-        })
+        });
         socket.on('changeIcon2', (data) => {
           
           $('#chest2').hide();
             $('#chest21').show();
              alert("YOU FOUND A CHEST 3 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon3', (data) => {
           
           $('#chest3').hide();
             $('#chest31').show();
              alert("YOU FOUND A CHEST 2 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon4', (data) => {
           
           $('#chest4').hide();
             $('#chest41').show();
              alert("YOU FOUND A CHEST 1 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon5', (data) => {
           
           $('#chest5').hide();
             $('#chest51').show();
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
-        })
+        });
         
         socket.on('youwin', (data) => {
-          alert(" DOOR'S UNLOCKED YOU WON! ");
-        })
+          alert(" DOOR'S UNLOCKED YOU WON! ")
+        });
         
         socket.on('notyet',(data)=> {
           alert("NOT THE DOOR, GO TO THE DOOR ICON!")
-        })
+        });
           
           
           
-           
+          
+          
+          
+          var myVar = setInterval(myTimer, 1000);
+
+            function myTimer() {
+              //alert("WORKING");
+                  
+          }
+          
+          
+          
+          
           
       });
+      
+     
+      
+      
     </script>
 
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgn3pRUB6WyzLsCARbu8ePVBSU-xfWQb0&callback=initMap"></script>
-    
-    
-    
-   
-    
-    
-    
     
   </body>
 </html>
