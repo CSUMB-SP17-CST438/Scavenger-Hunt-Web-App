@@ -345,14 +345,14 @@ window.fbAsyncInit = function () {
         
         socket.on('chests', (data) => {
           // console.log("testing");
-            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-            var marker = new google.maps.Marker({
-              position: {lat: parseFloat(data['chestLat']), lng: parseFloat(data['chestLng'])},
-              map: map,
-              title: 'Chest',
-              icon: image
-            });
-            allMarkers.push(marker);
+            // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            // var marker = new google.maps.Marker({
+            //   position: {lat: parseFloat(data['chestLat']), lng: parseFloat(data['chestLng'])},
+            //   map: map,
+            //   title: 'Chest',
+            //   icon: image
+            // });
+            // allMarkers.push(marker);
            
             
         })

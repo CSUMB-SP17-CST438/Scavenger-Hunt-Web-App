@@ -274,14 +274,14 @@
 
       socket.on('parkLoc', (data) => {
         // console.log("testing");
-        var marker = new google.maps.Marker({
-          position: {
-            lat: data['parkCoordsLat'],
-            lng: data['parkCoordsLng']
-          },
-          map: map,
-          title: 'Walk here!'
-        });
+        // var marker = new google.maps.Marker({
+        //   position: {
+        //     lat: data['parkCoordsLat'],
+        //     lng: data['parkCoordsLng']
+        //   },
+        //   map: map,
+        //   title: 'Walk here!'
+        // });
         // document.getElementById('start').style.visibility = 'hidden';
         var circle = new google.maps.Circle({
           strokeColor: '#FF0000',
@@ -321,6 +321,24 @@
         });
         // document.getElementById('start').style.visibility = 'hidden';
       })
+      
+      socket.on('resetting', (data) => {
+          for (var i = 0; i < allMarkers.length; i++) {
+              allMarkers[i].setMap(null);
+            }
+          allMarkers = [];
+          // circle.setMap(null);
+            $('#chest1').show();
+            $('#chest11').hide();
+            $('#chest2').show();
+            $('#chest21').hide();
+            $('#chest3').show();
+            $('#chest31').hide();
+            $('#chest4').show();
+            $('#chest41').hide();
+            $('#chest5').show();
+            $('#chest51').hide();
+        })
 
       socket.on('playerLoc', (data) => {
 
@@ -331,8 +349,8 @@
         // console.log("testing");
         var marker = new google.maps.Marker({
           position: {
-            lat: data['demoLat'],
-            lng: data['demoLng']
+            lat: data['lat'],
+            lng: data['lng']
           },
           map: map,
           title: 'Player'
@@ -344,16 +362,16 @@
 
       socket.on('chests', (data) => {
         // console.log("testing");
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-        var marker = new google.maps.Marker({
-          position: {
-            lat: data['chestLat'],
-            lng: data['chestLng']
-          },
-          map: map,
-          title: 'Chest',
-          icon: image
-        });
+        // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        // var marker = new google.maps.Marker({
+        //   position: {
+        //     lat: data['chestLat'],
+        //     lng: data['chestLng']
+        //   },
+        //   map: map,
+        //   title: 'Chest',
+        //   icon: image
+        // });
         // document.getElementById('start').style.visibility = 'hidden';
         // var circle = new google.maps.Circle({
         //   strokeColor: '#0029ff',
@@ -396,7 +414,7 @@
             // and signed request each expire
             // var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
-            socket.emit('startDemo', {
+            socket.emit('start', {
               'facebook_user_token': accessToken,
             });
           }
@@ -428,7 +446,11 @@
         $('#key').show();
       });
 
-
+      socket.on('restart', (data) => {
+            $('#key').hide();
+            $('#update').hide();
+            $('#start').show();
+          })
 
 
       socket.on('changeIcon1', (data) => {
