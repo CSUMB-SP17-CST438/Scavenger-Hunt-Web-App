@@ -32,16 +32,48 @@
   </head>
   <body>
     <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  //maria's 
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
+<script>
+window.fbAsyncInit = function () {
+  FB.init({
+    //maria's
+    appId: '1875922112681168',
+    //sam's
+    // appId: '155556774953468',
+    status: true,
+    cookie: true,
+    xfbml: true
+  });
+  
+  FB.Event.subscribe('auth.login', function(response) {
+      console.log("login_event");
+      console.log(response.status);
+      console.log(response);
+      location.reload();
+    });
+    
+    FB.Event.subscribe('auth.logout', function(response) {
+      console.log("logout_event");
+      console.log(response.status);
+      console.log(response);
+      location.reload();
+    });
+};
 
-  //sam's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";  
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+(function (doc) {
+  var js;
+  var id = 'facebook-jssdk';
+  var ref = doc.getElementsByTagName('script')[0];
+  if (doc.getElementById(id)) {
+    return;
+  }
+  js = doc.createElement('script');
+  js.id = id;
+  js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js";
+  ref.parentNode.insertBefore(js, ref);
+}(document));
+
+</script>
     
       
     
@@ -326,8 +358,10 @@
     </script>
     
     <script>
-      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+      
       $(document).ready(function(){
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+  
         $("#start").click(function(){
               // alert("The start button was clicked.");
               FB.getLoginStatus(function(response) {
