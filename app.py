@@ -387,7 +387,7 @@ def start_game(data):
         
 @socketio.on('updateDemoLocation')
 def update_player_demo(data):
-    # print "update demo"
+    print "update demo"
     if (getObtainedKey() == 'Y'):
         checkDistance(getDoorLat(), getDoorLng(), getDemoLat(), getDemoLng())
     else:
@@ -395,6 +395,7 @@ def update_player_demo(data):
         
 @socketio.on('updateLocation')
 def update_player(data):
+    print "UPDATE LOCATION"
     setCoords(data['coords']['lat'], data['coords']['lng'])
     socketio.emit('playerLoc', {
         'lat': getLat(),
@@ -416,6 +417,7 @@ def handle_my_custom_event(data):
 def testing(data):
     print data['testVar']['lat']
     print data['testVar']['lng']
+    
     
 
 def hint(playerLat, playerLng):
@@ -519,6 +521,10 @@ def updateChestStatus():
         socketio.emit('changeIcon5', {
         
         });
+        x,y = getDoorCoords()
+        setCurrChestLat(x)
+        setCurrChestLng(y)
+        
         setObtainedKey('Y')
         updateChest = models.chestInfo.query.filter_by(fbID=getFBid()).filter_by(chestNumber=5).first()
         # print updateChest
@@ -577,11 +583,7 @@ def checkDistance(itemLat, itemLng, playerLat, playerLng):
             postToFacebook()
             deleteData()
         else:
-            print "not at door"
-            socketio.emit('notyet',{
-                
-            });
-            
+            hint(playerLat, playerLng)
     else:
         if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):
             print "found it"
