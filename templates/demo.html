@@ -36,7 +36,11 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
+
+  //maria's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
+
+  //sam's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
+  
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     
@@ -88,9 +92,9 @@
          <div class="col-xs-6 col-md-4">
 
            <!--<div id="facebook"></div>-->
-           <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
-
-
+           <!--<div id="fb-button" class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>-->
+          <div class="fb-login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
+  
            <button id="rules" type="button" class="btn btn-info" >Directions</button>\
          </div>
       
@@ -182,6 +186,7 @@
 
       function initMap() {
         var markers = [];
+        var allMarkers = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 36.6258038, lng: -121.8600351},
           zoom: 13,
@@ -230,11 +235,12 @@
         
         socket.on('parkLoc', (data) => {
           // console.log("testing");
-            var marker = new google.maps.Marker({
-              position: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
-              map: map,
-              title: 'Walk here!'
-            });
+            // var marker = new google.maps.Marker({
+            //   position: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
+            //   map: map,
+            //   title: 'Walk here!'
+            // });
+            // allMarkers.push(marker);
             // document.getElementById('start').style.visibility = 'hidden';
             var circle = new google.maps.Circle({
               strokeColor: '#FF0000',
@@ -251,12 +257,32 @@
         
         socket.on('door', (data) => {
           // console.log("testing");
+          var image = {
+            url: '../static/chests/door.png',
+            // This marker is 20 pixels wide by 32 pixels high.
+            scaledSize: new google.maps.Size(40, 50),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, 0)
+          };
+          
             var marker = new google.maps.Marker({
               position: {lat: data['doorLat'], lng: data['doorLng']},
               map: map,
-              title: 'Door'
+              title: 'Door',
+              icon: image,
             });
+            allMarkers.push(marker);
             // document.getElementById('start').style.visibility = 'hidden';
+        })
+        
+        socket.on('resetting', (data) => {
+          for (var i = 0; i < allMarkers.length; i++) {
+              allMarkers[i].setMap(null);
+            }
+          allMarkers = [];
+          // circle.setMap(null);
         })
         
         socket.on('playerLoc', (data) => {
@@ -272,6 +298,7 @@
               title: 'Player'
             });
             markers.push(marker);
+            allMarkers.push(marker);
             // document.getElementById('start').style.visibility = 'hidden';
         })
         
@@ -280,22 +307,13 @@
           // console.log("testing");
             var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             var marker = new google.maps.Marker({
-              position: {lat: data['chestLat'], lng: data['chestLng']},
+              position: {lat: parseFloat(data['chestLat']), lng: parseFloat(data['chestLng'])},
               map: map,
               title: 'Chest',
               icon: image
             });
-            // document.getElementById('start').style.visibility = 'hidden';
-            var circle = new google.maps.Circle({
-              strokeColor: '#0029ff',
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: '#0029ff',
-              fillOpacity: 0.35,
-              map: map,
-              center: {lat: data['chestLat'], lng: data['chestLng']},
-              radius: 5,
-            });
+            allMarkers.push(marker);
+           
             
         })
         
@@ -315,6 +333,7 @@
     <script>
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
       $(document).ready(function(){
+        
         $("#start").click(function(){
               // alert("The start button was clicked.");
               FB.getLoginStatus(function(response) {
@@ -413,6 +432,12 @@
             $('#key').show();
           });
           
+          socket.on('restart', (data) => {
+            $('#key').hide();
+            $('#update').hide();
+            $('#start').show();
+          })
+          
           
           
           
@@ -447,6 +472,33 @@
             $('#chest51').show();
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
         });
+        
+        socket.on('changeChest1', (data) => {
+          
+          $('#chest1').hide();
+            $('#chest11').show();
+            
+        })
+        socket.on('changeChest2', (data) => {
+          
+          $('#chest2').hide();
+            $('#chest21').show();
+        })
+        socket.on('changeChest3', (data) => {
+          
+          $('#chest3').hide();
+            $('#chest31').show();
+        })
+        socket.on('changeChest4', (data) => {
+          
+          $('#chest4').hide();
+            $('#chest41').show();
+        })
+        socket.on('changeChest5', (data) => {
+          
+          $('#chest5').hide();
+            $('#chest51').show();
+        })
         
         socket.on('youwin', (data) => {
           alert(" DOOR'S UNLOCKED YOU WON! ")
