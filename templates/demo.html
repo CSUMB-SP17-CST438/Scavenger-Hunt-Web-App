@@ -36,7 +36,11 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
+
+  //maria's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1875922112681168";
+
+  //sam's //js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=155556774953468";
+  
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     
@@ -373,12 +377,22 @@
             socket.emit('up', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           $("#down").click(function(){
               // alert("The start button was clicked.");
             socket.emit('down', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           $("#right").click(function(){
               // alert("The start button was clicked.");
@@ -387,6 +401,11 @@
               
             });
             
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
+            
             
           });
           $("#left").click(function(){
@@ -394,6 +413,11 @@
             socket.emit('left', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           });
           socket.on('hideStartButton', (data) => {
             $('#start').hide();
@@ -402,11 +426,11 @@
             $('#left').show();
             $('#right').show();
             $('#down').show();
-          })
+          });
           socket.on('showKeyButton', (data) => {
             $('#update').hide();
             $('#key').show();
-          })
+          });
           
           socket.on('restart', (data) => {
             $('#key').hide();
@@ -423,31 +447,31 @@
             $('#chest11').show();
             alert("YOU FOUND A CHEST 4 MORE TO GO!");
             
-        })
+        });
         socket.on('changeIcon2', (data) => {
           
           $('#chest2').hide();
             $('#chest21').show();
              alert("YOU FOUND A CHEST 3 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon3', (data) => {
           
           $('#chest3').hide();
             $('#chest31').show();
              alert("YOU FOUND A CHEST 2 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon4', (data) => {
           
           $('#chest4').hide();
             $('#chest41').show();
              alert("YOU FOUND A CHEST 1 MORE TO GO!");
-        })
+        });
         socket.on('changeIcon5', (data) => {
           
           $('#chest5').hide();
             $('#chest51').show();
              alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
-        })
+        });
         
         socket.on('changeChest1', (data) => {
           
@@ -477,19 +501,24 @@
         })
         
         socket.on('youwin', (data) => {
-          alert(" DOOR'S UNLOCKED YOU WON! ");
-        })
+          alert(" DOOR'S UNLOCKED YOU WON! ")
+        });
         
         socket.on('notyet',(data)=> {
           alert("NOT THE DOOR, GO TO THE DOOR ICON!")
-        })
+        });
           
           
           
           
           
           
-          
+          var myVar = setInterval(myTimer, 1000);
+
+            function myTimer() {
+              //alert("WORKING");
+                  
+          }
           
           
           
@@ -504,21 +533,41 @@
             socket.emit('up', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           } else if (e.keyCode == 65) {
             // a
             socket.emit('left', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           } else if (e.keyCode == 68) {
             // d
             socket.emit('right', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
           } else if (e.keyCode == 83)
           // s
           socket.emit('down', {
               
             });
+            
+             socket.emit('updateDemoLocation', {
+                
+                
+              });
       });
       
       
