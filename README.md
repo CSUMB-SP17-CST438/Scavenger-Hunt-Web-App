@@ -14,19 +14,14 @@ Samuel Valdez
 Maria Loza
 
 ## What were you able to complete for this handin?
-Everything that we were aiming and what it was lacking from handin 1.
-The chests and door locations were created and stored. Grabbing the nearest park information. We also updated the database. The hint creator was completed, which
-points to the location of the current chest based off its location and the player's location on the map. Implemented the key and the ability to unlock the door if
-the player has the key.
+The project has visuals. We also added a demo version for people who can't go outside
+and test it out. We also added Facebook login.
 
 ## What are the known problems, if any, with your project?
-If more than one device starts playing, their markers are shared throughout all the devices. We'll have to figure out how to make the web app personalized per 
-person/device. 
-This isn't really a problem. But we haven't been able to go out and test it out. But if we thought it out correctly, it should work.
+The biggest problem was getting the database to work on Heroku. 
 
 ## How would you improve it if you had more time?
-Definitely, go outside and test it. 
-Additionally, personalizing the web app.
+More testing. 
 
 
 
