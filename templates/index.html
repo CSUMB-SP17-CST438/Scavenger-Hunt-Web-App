@@ -1,34 +1,56 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
-  <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
-  <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
+    
+    <title>KEY QUEST </title>
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    
+    
+    <style type="text/css">
+      
+      h3{
+      color:white;
+    }
+    h2{
+       text-align:center;
 
-  <title>Geolocation</title>
-
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  <meta charset="utf-8">
-
-
-  <style type="text/css">
-    h3 {
-      color: white;
     }
     
     h1 {
       text-align: center;
     }
+
     
-    .col-centered {
+    .dropdown{
+    
+    margin-left:auto;
+    
+    }
+    .title{
+      background-color:black;
+      color:white;
+    }
+    
+    #stuff{
+      padding:20px;
+    }
+      
+      .col-centered {
       float: none;
       margin: 0 auto;
       text-align: left;
     }
-  </style>
-
-
+    </style>
+    
+    
+    
+  
 
 </head>
 
@@ -84,34 +106,36 @@
   <div id="playArea">
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-      <div class="container">
 
-        <div class="row">
+  <div class="container">
+    
+    <div class= "row">
+      
+       <div class="col-xs-6 col-md-4">
+         
+         <img src="../static/chests/missingChest.png" id = "chest1" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest11" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest2" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest21" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest3" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest31" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest4" height="42" width="42" >
+         <img src="../static/chests/foundChest.png" id = "chest41" height="42" width="42" style="display: none">
+         
+         <img src="../static/chests/missingChest.png" id = "chest5" height="42" width="42">
+         <img src="../static/chests/foundChest.png" id = "chest51" height="42" width="42" style="display: none">
+         
+         <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
+         
+       </div>
+        <div class="col-xs-6 col-md-4">
+          <h3>KEY QUEST</h3>
+        </div>
+         <div class="col-xs-6 col-md-4">
 
-          <div class="col-xs-6 col-md-4">
-
-            <img src="../static/chests/missingChest.png" id="chest1" height="42" width="42">
-            <img src="../static/chests/foundChest.png" id="chest11" height="42" width="42" style="display: none">
-
-            <img src="../static/chests/missingChest.png" id="chest2" height="42" width="42">
-            <img src="../static/chests/foundChest.png" id="chest21" height="42" width="42" style="display: none">
-
-            <img src="../static/chests/missingChest.png" id="chest3" height="42" width="42">
-            <img src="../static/chests/foundChest.png" id="chest31" height="42" width="42" style="display: none">
-
-            <img src="../static/chests/missingChest.png" id="chest4" height="42" width="42">
-            <img src="../static/chests/foundChest.png" id="chest41" height="42" width="42" style="display: none">
-
-            <img src="../static/chests/missingChest.png" id="chest5" height="42" width="42">
-            <img src="../static/chests/foundChest.png" id="chest51" height="42" width="42" style="display: none">
-
-            <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
-
-          </div>
-          <div class="col-xs-6 col-md-4">
-            <h3>Picachu</h3>
-          </div>
-          <div class="col-xs-6 col-md-4">
 
             <!--<div id="facebook"></div>-->
             <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
@@ -121,36 +145,45 @@
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
     <span class="caret"></span></button>
-                <ul class="dropdown-menu">
 
-                  <h1>Welcome to TITLE_OF_GAME</h1>
-
-                  <strong>OBJECTIVE:</strong>
-                  <p>Find all 5 chests to unlock the door.</p>
-                  <strong>DIRECTIONS:</strong>
-                  <p>Login with Facebook and relocate to the stated park.</p>
-
-
-                </ul>
-              </div>
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-
+    <ul class="dropdown-menu dropdown-menu-left">
+      
+      <h2 class = "title">  KEY QUEST</h2>
+      <div id= "stuff">
+      
+      <strong>OBJECTIVE:</strong><li>Find all 5 chests to unlock the door.</li> 
+      <strong>DIRECTIONS:</strong>
+      <ul><li>Login with Facebook</li> 
+      <li>We'll locate your location.</li>
+      <li>Direct you to nearest park.</li>
+      <li>Collect 5 chests to unlock door. </li>
+      <li>WIN.</li>
+      </ul>
       </div>
-
-
-    </nav>
-
-
-
-
+      
+     
+    </ul>
+  </div>
+</div>
+           
+         </div>
+      
+      
+    </div>
+    
+    
+    
+  </div>
+  
+  
+  </nav>
+    
+    
+    
+    
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+      
+    
 
 
 
