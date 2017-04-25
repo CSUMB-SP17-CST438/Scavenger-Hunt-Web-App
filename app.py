@@ -559,7 +559,7 @@ def updateChestStatus():
     
 def checkDistance(itemLat, itemLng, playerLat, playerLng):
     if (getObtainedKey() == 'Y'):
-        if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 1):
+        if (bearing.haversine(itemLat, itemLng, playerLat, playerLng) < 2):
             print "at door"
             print "yay"
             # congrats
