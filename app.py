@@ -364,23 +364,158 @@ def start_game_demo(data):
 @socketio.on('start')
 def start_game(data):
     del chestsCoords[:]
-    if (lat != 0 and lng != 0):
+    # users = models.Users.query.all()
+    users = models.db.session.query(models.Users).all()
+    
+    # # print "Test"
+    if (latDemo != 0 and lngDemo != 0):
+        response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+        json = response.json()
+        flag = False;
+        print json['name']
+        
+        setFBid(json['id'])
+        
         socketio.emit('playerLoc', {
         'lat': getLat(),
         'lng': getLng(),
         })
-        findNearestPark(getLat(), getLng())
-        sendPark()
-        createChests()
-        showChestOnMap()
-        createDoor()
-        setObtainedKey('N')
-        showDoorOnMap()
-        setChestNum(1)
-        x,y = chestsCoords[0]
-        setCurrChestLat(x)
-        setCurrChestLng(y)
-        hint(getLat(), getLng())
+        
+        for user in users:
+            if (user.user == json['name']):
+                print "already started"
+                prk = models.parkInfo.query.filter_by(fbID=json['id']).first();
+                setParkName(prk.parkName)
+                # print "park coords"
+                # print prk.coordinates
+                pX, pY = prk.coordinates.strip('()').split(',')
+                pX = float(pX)
+                pY = float(pY)
+                # pX = float(prk.coordinates[1:11])
+                # pY = float(prk.coordinates[12:24])
+                setParkCoords(pX, pY)
+                sendPark()
+                chst = models.chestInfo.query.filter_by(fbID=json['id']).all();
+                dr = models.doorInfo.query.filter_by(fbID=json['id']).first();
+                for c in chst:
+                    # print "chests"
+                    # print c.coordinates
+                    # tempX = Decimal(c.coordinates[1:19])
+                    # tempY = Decimal(c.coordinates[20:39])
+                    tempX, tempY = c.coordinates.strip('()').split(',')
+                    tempX = float(tempX)
+                    tempY = float(tempY)
+                    tempCoord = tempX, tempY
+                    chestsCoords.append(tempCoord)
+                for c in chst:
+                    # print "chest status"
+                    # print c.status
+                    if (c.status == 'Y'):
+                        # print "yes"
+                        # print c.chestNumber
+                        if (c.chestNumber == 1):
+                            socketio.emit('changeChest1', {
+        
+                            });
+                        elif (c.chestNumber == 2):
+                            socketio.emit('changeChest2', {
+        
+                            });
+                        elif (c.chestNumber == 3):
+                            socketio.emit('changeChest3', {
+        
+                            });
+                        elif (c.chestNumber == 4):
+                            socketio.emit('changeChest4', {
+        
+                            });
+                        elif (c.chestNumber == 5):
+                            socketio.emit('changeChest5', {
+        
+                            });
+                            if (dr.statusLocked == 'Y'):
+                                setObtainedKey('Y')
+                                print "yes to the key"
+                for c in chst:
+                    if (c.status == 'N'):
+                        # cX = Decimal(c.coordinates[1:19])
+                        # cY = Decimal(c.coordinates[20:39])
+                        cX, cY = c.coordinates.strip('()').split(',')
+                        cX = float(cX)
+                        cY = float(cY)
+                        # cX, cY = c.coordinates
+                        setChestNum(c.chestNumber)
+                        # if (c.chestNumber != 5):
+                        #     setObtainedKey('N')
+                        setCurrChestLat(cX)
+                        setCurrChestLng(cY)
+                        setObtainedKey('N')
+                        hint(getDemoLat(), getDemoLng())
+                        break
+                    # elif (c.chestNumber == 5 and dr.statusLocked == 'Y'):
+                    #     setObtainedKey('Y')
+                    #     print "yes to the key"
+                showChestOnMap()
+                dX, dY = dr.coordinates.strip('()').split(',')
+                dX = float(dX)
+                dY = float(dY)
+                setDoorLat(dX)
+                setDoorLng(dY)
+                showDoorOnMap()
+                
+                
+                flag = True;
+        if (flag == False):
+            findNearestPark(getLat(), getLng())
+            sendPark()
+            createChests()
+            showChestOnMap()
+            createDoor()
+            setObtainedKey('N')
+            showDoorOnMap()
+            setChestNum(1)
+            x,y = chestsCoords[0]
+            setCurrChestLat(x)
+            setCurrChestLng(y)
+            hint(getLat(), getLng())
+            
+            all_users.append({
+                    'name': json['name'],        
+                    'picture': json['picture']['data']['url'],
+                    'media': 'FB',
+                })
+    # users = models.db.session.query(models.Users).all()
+            usr = models.Users(json['picture']['data']['url'], json['id'], json['name'])
+            models.db.session.add(usr)
+            models.db.session.commit()
+            
+            park = models.progress(json['name'], 'Y', json['id'], str(datetime.datetime.now()).split('.')[0], '')
+            models.db.session.add(park)
+            models.db.session.commit()
+            
+            chest = models.chestInfo(json['name'], 1, chestsCoords[0], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 2, chestsCoords[1], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 3, chestsCoords[2], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 4, chestsCoords[3], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            chest = models.chestInfo(json['name'], 5, chestsCoords[4], 'N', json['id'])
+            models.db.session.add(chest)
+            models.db.session.commit()
+            
+            door = models.doorInfo(json['name'], (getDoorLat(), getDoorLng()), 'Y', json['id'])
+            models.db.session.add(door)
+            models.db.session.commit()
+            
+            park = models.parkInfo(json['name'], getParkName(), (getParkLat(), getParkLng()), json['id'])
+            models.db.session.add(park)
+            models.db.session.commit()
         
     else:
         print "location not shared"
