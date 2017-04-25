@@ -1,34 +1,112 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
     
-    <title>Geolocation</title>
+    <title>KEY QUEST </title>
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">this is for mobile-->
+    
     
     <style type="text/css">
-    
-    h3{
+      
+      h3{
       color:white;
     }
+    h2{
+       text-align:center;
+
+    }
+    
+    h1 {
+      text-align: center;
+    }
+
+    
+    .dropdown{
+    
+    margin-left:auto;
+    
+    }
+    .title{
+      background-color:black;
+      color:white;
+    }
+    
+    #stuff{
+      padding:20px;
+    }
       
+      .col-centered {
+      float: none;
+      margin: 0 auto;
+      text-align: left;
+    }
     </style>
     
     
-  </head>
-  
-  
-  
-  <body>
     
-    
-    
+  
+
+</head>
+
+<body>
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        //maria's
+        appId: '1875922112681168',
+        //sam's
+        // appId: '155556774953468',
+        status: true,
+        cookie: true,
+        xfbml: true
+      });
+
+      FB.Event.subscribe('auth.login', function(response) {
+        console.log("login_event");
+        console.log(response.status);
+        console.log(response);
+        location.reload();
+      });
+
+      FB.Event.subscribe('auth.logout', function(response) {
+        console.log("logout_event");
+        console.log(response.status);
+        console.log(response);
+        location.reload();
+      });
+    };
+
+    (function(doc) {
+      var js;
+      var id = 'facebook-jssdk';
+      var ref = doc.getElementsByTagName('script')[0];
+      if (doc.getElementById(id)) {
+        return;
+      }
+      js = doc.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+  </script>
+
+
+
+
+
+
+  <div id="playArea">
+
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+
   <div class="container">
     
     <div class= "row">
@@ -54,9 +132,41 @@
          
        </div>
         <div class="col-xs-6 col-md-4">
-          <h3>GAME TITLE</h3>
+          <h3>KEY QUEST</h3>
         </div>
-         <div class="col-xs-6 col-md-4"></div>
+         <div class="col-xs-6 col-md-4">
+
+
+            <!--<div id="facebook"></div>-->
+            <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+
+            <div class="container">
+
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
+    <span class="caret"></span></button>
+
+    <ul class="dropdown-menu dropdown-menu-left">
+      
+      <h2 class = "title">  KEY QUEST</h2>
+      <div id= "stuff">
+      
+      <strong>OBJECTIVE:</strong><li>Find all 5 chests to unlock the door.</li> 
+      <strong>DIRECTIONS:</strong>
+      <ul><li>Login with Facebook</li> 
+      <li>We'll locate your location.</li>
+      <li>Direct you to nearest park.</li>
+      <li>Collect 5 chests to unlock door. </li>
+      <li>WIN.</li>
+      </ul>
+      </div>
+      
+     
+    </ul>
+  </div>
+</div>
+           
+         </div>
       
       
     </div>
@@ -67,270 +177,377 @@
   
   
   </nav>
-      
-    <div id="map"></div>
     
     
- <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+    
+    
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
       
-      
-   
-      
-      
-          <div class="row">
-      <div class="col-xs-3 col-md-4"></div>
-         <div class="col-xs-3 col-md-4">
-            
-           <p class="text-center">
-            
-             
-              <button id="start" type="button" class="btn btn-success">Start!</button>
-              <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
-              <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
-             </p>
-         </div>
-        
-       <div class="col-xs-3 col-md-4">
+    
+
+
+
+
+
+      <div class="row">
+        <div class="col-xs-3 col-md-4">
+
+
+
+        </div>
+        <div class="col-xs-3 col-md-4">
+
+          <p class="text-center">
+
+
+            <button id="start" type="button" class="btn btn-success">Start!</button>
+            <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+            <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
+          </p>
+        </div>
+
+        <div class="col-xs-3 col-md-4">
           <div id="content"></div>
-       </div>
-      
-   </div> 
-      
-      
-      
+        </div>
+
+      </div>
+
+
+
     </nav>
-   
-    
-    
-    <script type="text/javascript" src="/static/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-   
-    <script type="text/javascript" charset="utf-8">
-      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-     
-      socket.emit('my event', {
-        'test': 'I\'m connected!',
+
+  </div>
+
+
+
+  <div id="map"></div>
+
+
+
+
+
+
+
+
+  <script type="text/javascript" src="/static/script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    socket.emit('my event', {
+      'test': 'I\'m connected!',
+    });
+  </script>
+
+  <script>
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+
+    function initMap() {
+      var markers = [];
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+          lat: 36.6258038,
+          lng: -121.8600351
+        },
+        zoom: 13,
+        mapTypeId: 'satellite',
       });
-    </script>
-    
-    <script>
-      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-          
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
 
-      function initMap() {
-        var markers = [];
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 36.6258038, lng: -121.8600351},
-          zoom: 15,
-          mapTypeId: 'satellite',
-        });
-        
-        var infoWindow = new google.maps.InfoWindow({map: map});
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            
-            socket.emit('geolocation', {
+      var infoWindow = new google.maps.InfoWindow({
+        map: map
+      });
+
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          socket.emit('geolocation', {
+            'coords': pos,
+          });
+
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          map.setCenter(pos);
+          $('#update').click(function() {
+            socket.emit('updateLocation', {
+
               'coords': pos,
             });
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            map.setCenter(pos);
-            $('#update').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
-              });
-            });
-            $('#key').click(function(){
-              socket.emit('updateLocation', {
-                'coords': pos,
-              });
-            });
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-        
-        socket.on('parkLoc', (data) => {
-          // console.log("testing");
-            var marker = new google.maps.Marker({
-              position: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
-              map: map,
-              title: 'Walk here!'
-            });
-            // document.getElementById('start').style.visibility = 'hidden';
-            var circle = new google.maps.Circle({
-              strokeColor: '#FF0000',
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: '#FF0000',
-              fillOpacity: 0.35,
-              map: map,
-              center: {lat: data['parkCoordsLat'], lng: data['parkCoordsLng']},
-              radius: 130
-            });
-        })
-        
-        socket.on('changeIcon1', (data) => {
-          
-          $('#chest1').hide();
-            $('#chest11').show();
-        })
-        
-        
-        
-        
-        socket.on('door', (data) => {
-          // console.log("testing");
-          var image = {
-            url: '../static/chests/door.png',
-            // This marker is 20 pixels wide by 32 pixels high.
-            scaledSize: new google.maps.Size(40, 50),
-            // The origin for this image is (0, 0).
-            origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            anchor: new google.maps.Point(0, 0)
-          };
 
-            var marker = new google.maps.Marker({
-              position: {lat: data['doorLat'], lng: data['doorLng']},
-              map: map,
-              title: 'Door',
-              icon: image,
+          });
+          $('#key').click(function() {
+            socket.emit('updateLocation', {
+              'coords': pos,
             });
-            // document.getElementById('start').style.visibility = 'hidden';
-        })
-        
-        socket.on('playerLoc', (data) => {
-            
-            for (var i = 0; i < markers.length; i++) {
-              markers[i].setMap(null);
+          });
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      }
+      else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+
+      socket.on('parkLoc', (data) => {
+        // console.log("testing");
+        // var marker = new google.maps.Marker({
+        //   position: {
+        //     lat: data['parkCoordsLat'],
+        //     lng: data['parkCoordsLng']
+        //   },
+        //   map: map,
+        //   title: 'Walk here!'
+        // });
+        // document.getElementById('start').style.visibility = 'hidden';
+        var circle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          center: {
+            lat: data['parkCoordsLat'],
+            lng: data['parkCoordsLng']
+          },
+          radius: 140
+        });
+
+      })
+
+      socket.on('door', (data) => {
+        var image = {
+          url: '../static/chests/door.png',
+          // This marker is 20 pixels wide by 32 pixels high.
+          scaledSize: new google.maps.Size(40, 50),
+          // The origin for this image is (0, 0).
+          origin: new google.maps.Point(0, 0),
+          // The anchor for this image is the base of the flagpole at (0, 32).
+          anchor: new google.maps.Point(0, 0)
+        };
+        // console.log("testing");
+        var marker = new google.maps.Marker({
+          position: {
+            lat: data['doorLat'],
+            lng: data['doorLng']
+          },
+          map: map,
+          title: 'Door',
+          icon: image,
+        });
+        // document.getElementById('start').style.visibility = 'hidden';
+      })
+      
+      socket.on('resetting', (data) => {
+          for (var i = 0; i < allMarkers.length; i++) {
+              allMarkers[i].setMap(null);
             }
-            markers = [];
-          // console.log("testing");
-            var marker = new google.maps.Marker({
-              position: {lat: data['lat'], lng: data['lng']},
-              map: map,
-              title: 'Player'
-            });
-            markers.push(marker);
-            // document.getElementById('start').style.visibility = 'hidden';
+          allMarkers = [];
+          // circle.setMap(null);
+            $('#chest1').show();
+            $('#chest11').hide();
+            $('#chest2').show();
+            $('#chest21').hide();
+            $('#chest3').show();
+            $('#chest31').hide();
+            $('#chest4').show();
+            $('#chest41').hide();
+            $('#chest5').show();
+            $('#chest51').hide();
         })
-        
-        socket.on('chests', (data) => {
-          // console.log("testing");
-            // var image = "../static/chests/foundChest.png";
-            var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-            var marker = new google.maps.Marker({
-              position: {lat: data['chestLat'], lng: data['chestLng']},
-              map: map,
-              title: 'Chest',
-              icon: image
-            });
-            // document.getElementById('start').style.visibility = 'hidden';
-            var circle = new google.maps.Circle({
-              strokeColor: '#0029ff',
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: '#0029ff',
-              fillOpacity: 0.35,
-              map: map,
-              center: {lat: data['chestLat'], lng: data['chestLng']},
-              radius: 5,
-            });
-            
-        })
-      }
-      
-      
+
+      socket.on('playerLoc', (data) => {
+
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+        // console.log("testing");
+        var marker = new google.maps.Marker({
+          position: {
+            lat: data['lat'],
+            lng: data['lng']
+          },
+          map: map,
+          title: 'Player'
+        });
+        markers.push(marker);
+        // document.getElementById('start').style.visibility = 'hidden';
+      })
 
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-      }
-    </script>
-    
-    <script>
+      socket.on('chests', (data) => {
+        // console.log("testing");
+        // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        // var marker = new google.maps.Marker({
+        //   position: {
+        //     lat: data['chestLat'],
+        //     lng: data['chestLng']
+        //   },
+        //   map: map,
+        //   title: 'Chest',
+        //   icon: image
+        // });
+        // document.getElementById('start').style.visibility = 'hidden';
+        // var circle = new google.maps.Circle({
+        //   strokeColor: '#0029ff',
+        //   strokeOpacity: 0.8,
+        //   strokeWeight: 2,
+        //   fillColor: '#0029ff',
+        //   fillOpacity: 0.35,
+        //   map: map,
+        //   center: {lat: data['chestLat'], lng: data['chestLng']},
+        //   radius: 5,
+        // });
+
+      })
+
+    }
+
+
+
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    }
+  </script>
+
+  <script>
+    $(document).ready(function() {
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-      $(document).ready(function(){
-          $("#start").click(function(){
-              // alert("The start button was clicked.");
-            socket.emit('start', {
-              
-            });
-          });
-          socket.on('hideStartButton', (data) => {
-            $('#start').hide();
-            $('#update').show();
-          })
-          socket.on('showKeyButton', (data) => {
-            $('#update').hide();
-            $('#key').show();
-          })
-          
-          
-          
-          
-          socket.on('changeIcon1', (data) => {
-          
-          $('#chest1').hide();
-            $('#chest11').show();
-        })
-        socket.on('changeIcon2', (data) => {
-          
-          $('#chest2').hide();
-            $('#chest21').show();
-        })
-        socket.on('changeIcon3', (data) => {
-          
-          $('#chest3').hide();
-            $('#chest31').show();
-        })
-        socket.on('changeIcon4', (data) => {
-          
-          $('#chest4').hide();
-            $('#chest41').show();
-        })
-        socket.on('changeIcon5', (data) => {
-          
-          $('#chest5').hide();
-            $('#chest51').show();
-        })
-          
-          
-          
-          
-      });
-    </script>
 
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgn3pRUB6WyzLsCARbu8ePVBSU-xfWQb0&callback=initMap"></script>
-    
-    
-    
-   
-    
-    
-    
-    
-  </body>
+      $("#start").click(function() {
+        // alert("The start button was clicked.");
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            // the user is logged in and has authenticated your
+            // app, and response.authResponse supplies
+            // the user's ID, a valid access token, a signed
+            // request, and the time the access token 
+            // and signed request each expire
+            // var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+            socket.emit('start', {
+              'facebook_user_token': accessToken,
+            });
+          }
+          else if (response.status === 'not_authorized') {
+            // the user is logged in to Facebook, 
+            // but has not authenticated your app
+          }
+          else {
+            // the user isn't logged in to Facebook.
+          }
+        });
+
+      });
+
+
+
+
+
+
+
+
+      socket.on('hideStartButton', (data) => {
+        $('#start').hide();
+        $('#update').show();
+
+      });
+      socket.on('showKeyButton', (data) => {
+        $('#update').hide();
+        $('#key').show();
+      });
+
+      socket.on('restart', (data) => {
+            $('#key').hide();
+            $('#update').hide();
+            $('#start').show();
+          })
+
+
+      socket.on('changeIcon1', (data) => {
+
+        $('#chest1').hide();
+        $('#chest11').show();
+        alert("YOU FOUND A CHEST 4 MORE TO GO!");
+
+      });
+      socket.on('changeIcon2', (data) => {
+
+        $('#chest2').hide();
+        $('#chest21').show();
+        alert("YOU FOUND A CHEST 3 MORE TO GO!");
+      });
+      socket.on('changeIcon3', (data) => {
+
+        $('#chest3').hide();
+        $('#chest31').show();
+        alert("YOU FOUND A CHEST 2 MORE TO GO!");
+      });
+      socket.on('changeIcon4', (data) => {
+
+        $('#chest4').hide();
+        $('#chest41').show();
+        alert("YOU FOUND A CHEST 1 MORE TO GO!");
+      });
+      socket.on('changeIcon5', (data) => {
+
+        $('#chest5').hide();
+        $('#chest51').show();
+        alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
+      });
+
+      socket.on('youwin', (data) => {
+        alert(" DOOR'S UNLOCKED YOU WON! ")
+      });
+
+      socket.on('notyet', (data) => {
+        alert("NOT THE DOOR, GO TO THE DOOR ICON!")
+      });
+
+
+
+
+
+
+      var myVar = setInterval(myTimer, 5000);
+
+      function myTimer() {
+        // alert("WORKING");
+
+      }
+
+
+
+
+
+    });
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgn3pRUB6WyzLsCARbu8ePVBSU-xfWQb0&callback=initMap"></script>
+
+</body>
+
 </html>
