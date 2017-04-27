@@ -127,6 +127,10 @@ def hello():
 @app.route('/demo')
 def demo():
     return flask.render_template('demo.html')
+    
+@app.route('/keyquest')
+def landing_page():
+    return flask.render_template('key.html')
 
 @socketio.on('connect')
 def on_connect():
