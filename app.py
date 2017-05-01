@@ -21,8 +21,8 @@ import models
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://proj3_user:project3@localhost/postgres'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = flask_sqlalchemy.SQLAlchemy(app)
 models.db.init_app(app)
@@ -44,6 +44,13 @@ def setFBid(x):
     
 def getFBid():
     return fbID
+    
+def setFBSessionID(x):
+    global fbIDSession
+    fbIDSession = x
+    
+def getFBSessionID():
+    return fbIDSession
 
 def setCoords(x, y):
     global lat
@@ -122,11 +129,27 @@ def getObtainedKey():
     
 @app.route('/')
 def hello():
-    return flask.render_template('index.html')
+    return flask.render_template('start.html')
+        
+        
     
 @app.route('/demo')
 def demo():
     return flask.render_template('demo.html')
+    
+
+@app.route('/<idNum>')
+def redirectUser(idNum):
+    
+    print idNum
+    # print "IDNum"
+    setFBSessionID(idNum)
+    return flask.render_template('index.html', idNum=idNum)
+    # flag = checkProfile(idNum)
+    # if flag:
+    #     return flask.render_template('index.html', idNum=idNum)
+    # else:
+    #     return flask.render_template('start.html')
     
 @app.route('/keyquest')
 def landing_page():
@@ -135,6 +158,25 @@ def landing_page():
 @socketio.on('connect')
 def on_connect():
     print "SOMEONE CONNECTED"
+    
+@socketio.on('check')
+def check(data):
+    response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+    json = response.json()
+    if (getFBSessionID() != json['id']):
+        print "WRONG!!!!!"
+        socketio.emit('notValid', {
+              
+            });
+    
+@socketio.on('redirectingUser')
+def redirect(data):
+    response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])    
+    json = response.json()
+    url = str(json['id'])
+    print url
+    print "redirect"
+    return flask.redirect(flask.url_for('redirectUser', idNum=url))
     
 @socketio.on('fbConnect')
 def on_fbConnect(data):

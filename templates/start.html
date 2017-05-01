@@ -132,8 +132,7 @@
          
        </div>
         <div class="col-xs-6 col-md-4">
-          <h3>KEY QUEST {% if idNum %}
-  <p>Hello {{ idNum }}!</p>{% endif %}</h3>
+          <h3>KEY QUEST</h3>
         </div>
          <div class="col-xs-6 col-md-4">
 
@@ -201,7 +200,7 @@
           <p class="text-center">
 
 
-            <button id="start" type="button" class="btn btn-success">Start Game!</button>
+            <button id="start" type="button" class="btn btn-success">Start!</button>
             <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
             <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
           </p>
@@ -284,19 +283,7 @@
           infoWindow.setPosition(pos);
           infoWindow.setContent('Location found.');
           map.setCenter(pos);
-          $('#update').click(function() {
-            socket.emit('updateLocation', {
-
-              'coords': pos,
-            });
-
-
-          });
-          $('#key').click(function() {
-            socket.emit('updateLocation', {
-              'coords': pos,
-            });
-          });
+         
         }, function() {
           handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -306,120 +293,7 @@
         handleLocationError(false, infoWindow, map.getCenter());
       }
 
-      socket.on('parkLoc', (data) => {
-        // console.log("testing");
-        // var marker = new google.maps.Marker({
-        //   position: {
-        //     lat: data['parkCoordsLat'],
-        //     lng: data['parkCoordsLng']
-        //   },
-        //   map: map,
-        //   title: 'Walk here!'
-        // });
-        // document.getElementById('start').style.visibility = 'hidden';
-        var circle = new google.maps.Circle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          map: map,
-          center: {
-            lat: data['parkCoordsLat'],
-            lng: data['parkCoordsLng']
-          },
-          radius: 140
-        });
-
-      })
-
-      socket.on('door', (data) => {
-        var image = {
-          url: '../static/chests/door.png',
-          // This marker is 20 pixels wide by 32 pixels high.
-          scaledSize: new google.maps.Size(40, 50),
-          // The origin for this image is (0, 0).
-          origin: new google.maps.Point(0, 0),
-          // The anchor for this image is the base of the flagpole at (0, 32).
-          anchor: new google.maps.Point(0, 0)
-        };
-        // console.log("testing");
-        var marker = new google.maps.Marker({
-          position: {
-            lat: data['doorLat'],
-            lng: data['doorLng']
-          },
-          map: map,
-          title: 'Door',
-          icon: image,
-        });
-        // document.getElementById('start').style.visibility = 'hidden';
-      })
       
-      socket.on('resetting', (data) => {
-          for (var i = 0; i < allMarkers.length; i++) {
-              allMarkers[i].setMap(null);
-            }
-          allMarkers = [];
-          // circle.setMap(null);
-            $('#chest1').show();
-            $('#chest11').hide();
-            $('#chest2').show();
-            $('#chest21').hide();
-            $('#chest3').show();
-            $('#chest31').hide();
-            $('#chest4').show();
-            $('#chest41').hide();
-            $('#chest5').show();
-            $('#chest51').hide();
-        })
-
-      socket.on('playerLoc', (data) => {
-
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(null);
-        }
-        markers = [];
-        // console.log("testing");
-        var marker = new google.maps.Marker({
-          position: {
-            lat: data['lat'],
-            lng: data['lng']
-          },
-          map: map,
-          title: 'Player'
-        });
-        markers.push(marker);
-        // document.getElementById('start').style.visibility = 'hidden';
-      })
-
-
-      socket.on('chests', (data) => {
-        // console.log("testing");
-        // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-        // var marker = new google.maps.Marker({
-        //   position: {
-        //     lat: data['chestLat'],
-        //     lng: data['chestLng']
-        //   },
-        //   map: map,
-        //   title: 'Chest',
-        //   icon: image
-        // });
-        // document.getElementById('start').style.visibility = 'hidden';
-        // var circle = new google.maps.Circle({
-        //   strokeColor: '#0029ff',
-        //   strokeOpacity: 0.8,
-        //   strokeWeight: 2,
-        //   fillColor: '#0029ff',
-        //   fillOpacity: 0.35,
-        //   map: map,
-        //   center: {lat: data['chestLat'], lng: data['chestLng']},
-        //   radius: 5,
-        // });
-
-      })
-
     }
 
 
@@ -434,41 +308,9 @@
   </script>
 
   <script>
-  window.onload = function () { FB.getLoginStatus(function(response) {
-          if (response.status === 'connected') {
-            // the user is logged in and has authenticated your
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
-            // and signed request each expire
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-            console.log(uid);
-            socket.emit('check', {
-              'facebook_user_token': accessToken,
-            });
-            
-            socket.on('notValid', (data) => {
-              $(location).attr('href', location.protocol + '//' + document.domain)
-      
-            });
-            // $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
-            // socket.emit('start', {
-            //   'facebook_user_token': accessToken,
-            // });
-            
-          }
-          else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook, 
-            // but has not authenticated your app
-          }
-          else {
-            // the user isn't logged in to Facebook.
-          }
-        }); }
     $(document).ready(function() {
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-      
+
       $("#start").click(function() {
         // alert("The start button was clicked.");
         FB.getLoginStatus(function(response) {
@@ -481,10 +323,8 @@
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             
-            // $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
-            socket.emit('start', {
-              'facebook_user_token': accessToken,
-            });
+            $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
+           
             
           }
           else if (response.status === 'not_authorized') {
@@ -501,78 +341,6 @@
 
 
 
-
-
-
-
-      socket.on('hideStartButton', (data) => {
-        $('#start').hide();
-        $('#update').show();
-
-      });
-      socket.on('showKeyButton', (data) => {
-        $('#update').hide();
-        $('#key').show();
-      });
-
-      socket.on('restart', (data) => {
-            $('#key').hide();
-            $('#update').hide();
-            $('#start').show();
-          })
-
-
-      socket.on('changeIcon1', (data) => {
-
-        $('#chest1').hide();
-        $('#chest11').show();
-        alert("YOU FOUND A CHEST 4 MORE TO GO!");
-
-      });
-      socket.on('changeIcon2', (data) => {
-
-        $('#chest2').hide();
-        $('#chest21').show();
-        alert("YOU FOUND A CHEST 3 MORE TO GO!");
-      });
-      socket.on('changeIcon3', (data) => {
-
-        $('#chest3').hide();
-        $('#chest31').show();
-        alert("YOU FOUND A CHEST 2 MORE TO GO!");
-      });
-      socket.on('changeIcon4', (data) => {
-
-        $('#chest4').hide();
-        $('#chest41').show();
-        alert("YOU FOUND A CHEST 1 MORE TO GO!");
-      });
-      socket.on('changeIcon5', (data) => {
-
-        $('#chest5').hide();
-        $('#chest51').show();
-        alert("YOU FOUND A CHEST & INSIDE IS A KEY GO TO THE DOOR!");
-      });
-
-      socket.on('youwin', (data) => {
-        alert(" DOOR'S UNLOCKED YOU WON! ")
-      });
-
-      socket.on('notyet', (data) => {
-        alert("NOT THE DOOR, GO TO THE DOOR ICON!")
-      });
-
-
-
-
-
-
-      var myVar = setInterval(myTimer, 5000);
-
-      function myTimer() {
-        // alert("WORKING");
-
-      }
 
 
 
