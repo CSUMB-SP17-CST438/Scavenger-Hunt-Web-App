@@ -1,56 +1,53 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
-    
-    <title>KEY QUEST </title>
-    
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    
-    
-    <style type="text/css">
-      
-      h3{
-      color:white;
-    }
-    h2{
-       text-align:center;
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
 
+  <title>KEY QUEST </title>
+
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+
+
+  <style type="text/css">
+    h3,
+    h4 {
+      color: white;
     }
     
-    h1 {
+    h1,
+    h2,
+    h3,
+    h4 {
       text-align: center;
     }
-
     
-    .dropdown{
-    
-    margin-left:auto;
-    
-    }
-    .title{
-      background-color:black;
-      color:white;
+    .dropdown {
+      margin-left: auto;
     }
     
-    #stuff{
-      padding:20px;
+    .title {
+      background-color: black;
+      color: white;
     }
-      
-      .col-centered {
+    
+    #stuff {
+      padding: 20px;
+    }
+    
+    .col-centered {
       float: none;
       margin: 0 auto;
       text-align: left;
     }
-    </style>
-    
-    
-    
-  
+  </style>
+
+
+
+
 
 </head>
 
@@ -107,37 +104,37 @@
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
 
-  <div class="container">
-    
-    <div class= "row">
-      
-       <div class="col-xs-6 col-md-4">
-         
-         <img src="../static/chests/missingChest.png" id = "chest1" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest11" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest2" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest21" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest3" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest31" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest4" height="42" width="42" >
-         <img src="../static/chests/foundChest.png" id = "chest41" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest5" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest51" height="42" width="42" style="display: none">
-         
-         <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
-         
-       </div>
-        <div class="col-xs-6 col-md-4">
-          <h3>KEY QUEST {% if idNum %}
-  <p>Hello {{ idNum }}!</p>{% endif %}</h3>
-        </div>
-         <div class="col-xs-6 col-md-4">
+      <div class="container">
 
+        <div class="row">
 
+          <div class="col-xs-6 col-md-4">
+
+            <img src="../static/chests/missingChest.png" id="chest1" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest11" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest2" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest21" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest3" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest31" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest4" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest41" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest5" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest51" height="42" width="42" style="display: none">
+
+            <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
+
+          </div>
+          <div id="myName" class="col-xs-6 col-md-4">
+            <h3>KEY QUEST </h3>
+            <!--<div id="myName"></div>-->
+          </div>
+          <div class="col-xs-6 col-md-4">
+
+            <div class="cent">
             <!--<div id="facebook"></div>-->
             <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
 
@@ -147,44 +144,47 @@
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
     <span class="caret"></span></button>
 
-    <ul class="dropdown-menu dropdown-menu-left">
-      
-      <h2 class = "title">  KEY QUEST</h2>
-      <div id= "stuff">
-      
-      <strong>OBJECTIVE:</strong><li>Find all 5 chests to unlock the door.</li> 
-      <strong>DIRECTIONS:</strong>
-      <ul><li>Login with Facebook</li> 
-      <li>We'll locate your location.</li>
-      <li>Direct you to nearest park.</li>
-      <li>Collect 5 chests to unlock door. </li>
-      <li>WIN.</li>
-      </ul>
+                <ul class="dropdown-menu dropdown-menu-left">
+
+                  <h2 class="title"> KEY QUEST</h2>
+                  <div id="stuff">
+
+                    <strong>OBJECTIVE:</strong>
+                    <li>Find all 5 chests to unlock the door.</li>
+                    <strong>DIRECTIONS:</strong>
+                    <ul>
+                      <li>Login with Facebook</li>
+                      <li>We'll locate your location.</li>
+                      <li>Direct you to nearest park.</li>
+                      <li>Collect 5 chests to unlock door. </li>
+                      <li>WIN.</li>
+                    </ul>
+                  </div>
+
+
+                </ul>
+              </div>
+            </div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
       </div>
-      
-     
-    </ul>
-  </div>
-</div>
-           
-         </div>
-      
-      
-    </div>
-    
-    
-    
-  </div>
-  
-  
-  </nav>
-    
-    
-    
-    
+
+
+    </nav>
+
+
+
+
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
-      
-    
+
+
 
 
 
@@ -201,7 +201,7 @@
           <p class="text-center">
 
 
-            <button id="start" type="button" class="btn btn-success">Start Game!</button>
+            <button id="start" type="button" class="btn btn-success">Ready!</button>
             <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
             <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
           </p>
@@ -355,24 +355,24 @@
         });
         // document.getElementById('start').style.visibility = 'hidden';
       })
-      
+
       socket.on('resetting', (data) => {
-          for (var i = 0; i < allMarkers.length; i++) {
-              allMarkers[i].setMap(null);
-            }
-          allMarkers = [];
-          // circle.setMap(null);
-            $('#chest1').show();
-            $('#chest11').hide();
-            $('#chest2').show();
-            $('#chest21').hide();
-            $('#chest3').show();
-            $('#chest31').hide();
-            $('#chest4').show();
-            $('#chest41').hide();
-            $('#chest5').show();
-            $('#chest51').hide();
-        })
+        for (var i = 0; i < allMarkers.length; i++) {
+          allMarkers[i].setMap(null);
+        }
+        allMarkers = [];
+        // circle.setMap(null);
+        $('#chest1').show();
+        $('#chest11').hide();
+        $('#chest2').show();
+        $('#chest21').hide();
+        $('#chest3').show();
+        $('#chest31').hide();
+        $('#chest4').show();
+        $('#chest41').hide();
+        $('#chest5').show();
+        $('#chest51').hide();
+      })
 
       socket.on('playerLoc', (data) => {
 
@@ -434,41 +434,48 @@
   </script>
 
   <script>
-  window.onload = function () { FB.getLoginStatus(function(response) {
-          if (response.status === 'connected') {
-            // the user is logged in and has authenticated your
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
-            // and signed request each expire
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-            console.log(uid);
-            socket.emit('check', {
-              'facebook_user_token': accessToken,
-            });
-            
-            socket.on('notValid', (data) => {
-              $(location).attr('href', location.protocol + '//' + document.domain)
-      
-            });
-            // $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
-            // socket.emit('start', {
-            //   'facebook_user_token': accessToken,
-            // });
-            
-          }
-          else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook, 
-            // but has not authenticated your app
-          }
-          else {
-            // the user isn't logged in to Facebook.
-          }
-        }); }
+    window.onload = function() {
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          // the user is logged in and has authenticated your
+          // app, and response.authResponse supplies
+          // the user's ID, a valid access token, a signed
+          // request, and the time the access token 
+          // and signed request each expire
+          var uid = response.authResponse.userID;
+          var accessToken = response.authResponse.accessToken;
+          console.log(uid);
+          socket.emit('check', {
+            'facebook_user_token': accessToken,
+          });
+
+          socket.on('notValid', (data) => {
+            $(location).attr('href', location.protocol + '//' + document.domain)
+
+          });
+          socket.on('valid', (data) => {
+            $("#myName").append("<h4>Hello, " + data['username'] + "</h4>");
+
+          });
+
+          // $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
+          // socket.emit('start', {
+          //   'facebook_user_token': accessToken,
+          // });
+
+        }
+        else if (response.status === 'not_authorized') {
+          // the user is logged in to Facebook, 
+          // but has not authenticated your app
+        }
+        else {
+          // the user isn't logged in to Facebook.
+        }
+      });
+    }
     $(document).ready(function() {
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-      
+
       $("#start").click(function() {
         // alert("The start button was clicked.");
         FB.getLoginStatus(function(response) {
@@ -480,12 +487,12 @@
             // and signed request each expire
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
-            
+
             // $(location).attr('href', location.protocol + '//' + document.domain + '/'+uid)
             socket.emit('start', {
               'facebook_user_token': accessToken,
             });
-            
+
           }
           else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook, 
@@ -516,10 +523,10 @@
       });
 
       socket.on('restart', (data) => {
-            $('#key').hide();
-            $('#update').hide();
-            $('#start').show();
-          })
+        $('#key').hide();
+        $('#update').hide();
+        $('#start').show();
+      })
 
 
       socket.on('changeIcon1', (data) => {

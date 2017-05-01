@@ -168,6 +168,10 @@ def check(data):
         socketio.emit('notValid', {
               
             });
+    else:
+       socketio.emit('valid', {
+              'username': json['name'],
+            }); 
     
 @socketio.on('redirectingUser')
 def redirect(data):
