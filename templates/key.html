@@ -20,11 +20,15 @@
           margin: 0 auto;
 
     }
+    h3{
+         margin-top: 60px;
+    }
     #story{
       background-color:#f9f4c7;
         text-align: left;
             border-radius: 15px;
-                padding: 20px; 
+                padding: 50px; 
+                margin-right: 40px;
 
 
     }
@@ -35,6 +39,27 @@
         text-align: left;
             border-radius: 15px;
                 padding: 20px; 
+                margin-right: 40px;
+
+
+    }
+    
+    #magic{
+      background-color:#f9f4c7;
+        text-align: left;
+            border-radius: 15px;
+                padding: 50px; 
+                margin-right: 40px;
+
+
+    }
+    
+    #why{
+      background-color:#f9f4c7;
+        text-align: left;
+            border-radius: 15px;
+                padding: 50px; 
+                margin-right: 40px;
 
 
     }
@@ -114,11 +139,44 @@ the virtual world in one.  It does so by getting the user up from the couch and 
 will start the application.  The user will be asked to  physically move to various locations in the park area in order to find virtual chests with the assistance of a compass. 
 Once a chest is found, the user will get a notification and the application will update with a new chest location-which will be again directed by the compass.
 This action will repeat four more times to encourage a thorough observation of a park while the user is kept busy hunting for chests.  The application can be
-"ended" once the last chest is found and it will notify the user that it has found all chests in the area. The application technically can't be 
+"ended" once the last chest is found and  will alert the user that it has found all chests in the area and will collect a key. The application technically can't be 
 "beaten" because it encourages users to explore more parks and find their  chests in their own respected locations.
 </p>
 </div>
 
+
+
+
+<h3>Magic</h3>
+<div id = "magic">
+
+
+<p>
+KeyQuest is made up of multiple technologies all working harmoniously.  For the front end development we used Html5, Bootstrap, and Javascript.  
+The most notable piece is the Google Maps API which we used to display user location - shared by the geolocation feature in html5. To distinguish our 
+users, we implemented a login through Facebook that allows us to connect and store data individually. In the backend we have 
+Flask as our framework.  We have components made with React.  SocketIO to pass data around from our client to our server and vice versa. We also 
+have the Google places api, which is what directs the user to a new park location. All the data collected from the application is stored on our PSQL 
+database for returning users could pick up where they left off.  Our application was deployed to Heroku.
+
+</p>
+    
+    
+</div>
+
+<h3> WHY </h3>
+<div id = "why">
+  
+  <p>
+  Our team's vision from the start has aimed to produce an application that would make our users coexist with the real world and the virtual one on their phone.
+  We chose the aspect of finding and collecting chests, sort of like a scavenger hunt, but the user is encouranged explore the park's surroundings.  This feature is 
+  heighten when the user roams a park that the user is unacquainted with.  WHY WEB VS APP?  Our focus was to bring our application to as many people as possible, 
+  and if we were making an applicaiton on ios or android we could potentially reach less people. We want anyone with a phone web brower to pick up our application and 
+  enjoy without leaving anyone behind.
+  
+  </p>
+  
+</div>
 
  <h3>Creators</h3>
 
@@ -153,18 +211,6 @@ This action will repeat four more times to encourage a thorough observation of a
 
 
 
-</div>
-
-<br>
-<br>
-<br>
-<div id = "magic">
-  <br>
-<br>
-<br>  
-<h2>Magic</h2>
-    
-    
 </div>
 
 <br>
