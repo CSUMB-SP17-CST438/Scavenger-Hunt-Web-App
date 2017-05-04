@@ -3,53 +3,66 @@
 
 <head>
     <title>Key Quest</title>
- <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-    <style type="text/css">
+  <style>
     #blackbar{
       background-color:black;
       text-align:center;
     }
+   
     
-    .navbar-inverse{
-       position: fixed;
-    top: 0px;
-    width: 95%;
-    z-index:1;
-    }
     
     .item{
           margin: 0 auto;
+
+    }
+    #story{
+      background-color:#f9f4c7;
+        text-align: left;
+            border-radius: 15px;
+                padding: 20px; 
+
+
+    }
+    
+     
+    #creators{
+      background-color:#f9f4c7;
+        text-align: left;
+            border-radius: 15px;
+                padding: 20px; 
+
 
     }
     </style>
 </head>
 
 <body>
-<div class = "container">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">KeyQuest</a>
+      <a class="navbar-brand" href="#myCarousel">KeyQuest</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Story</a></li>
-      <li><a href="#">Creators</a></li>
-      <li><a href="#">Magic</a></li>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="#story">Story</a></li>
+      <li><a href="#creators">Creators</a></li>
+      <li><a href="#magic">Magic</a></li>
       <li><a href="#">X</a></li>
     </ul>
   </div>
 </nav>
 
 
-
-  <h2>Carousel Example</h2>  
+ 
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
+    <br>
+<br>
+<br> 
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -83,14 +96,75 @@
   </div>
 
 
-   
 
 <h1 id = "blackbar"><img src="../static/img/apple.jpeg" width = "50"></img>&nbsp<img src="../static/img/windows.png" width = "50" ></img>&nbsp
 <img src="../static/img/android.png" width = "50" ></img>&nbsp<img src="../static/img/ios.png" width = "50" ></img></h1>
 
+<div class = "container">
+
+
+ 
+<h3>Story</h3>
+<div id = "story">
+    
+
+
+<p><strong>KeyQuest</strong> is a CSUMB  CST 438 Final project.  KeyQuest is a mobile web application that focuses on blending reality and
+the virtual world in one.  It does so by getting the user up from the couch and focus more on the their surrounding park area. There the user 
+will start the application.  The user will be asked to  physically move to various locations in the park area in order to find virtual chests with the assistance of a compass. 
+Once a chest is found, the user will get a notification and the application will update with a new chest location-which will be again directed by the compass.
+This action will repeat four more times to encourage a thorough observation of a park while the user is kept busy hunting for chests.  The application can be
+"ended" once the last chest is found and it will notify the user that it has found all chests in the area. The application technically can't be 
+"beaten" because it encourages users to explore more parks and find their  chests in their own respected locations.
+</p>
+</div>
+
+
+ <h3>Creators</h3>
+
+<div id = "creators">
+   
+
+
+<div class="container">
+ 
+  
+  <div class="row">
+    <div class="col-lg-6 align-self-center" >
+      <img  class="img-circle center-block"  src="../static/img/maria.jpg" width = "250" ></img>
+      
+              <h2>Maria Loza</h2>
+
+    </div>
+    <div class="col-lg-6" >
+     <img   class="img-circle center-block" src="../static/img/sam.jpg" height = "294"width = "280" ></img>
+          <h2>Samuel Valdez</h2> 
+
+  </div>
+</div>    
+    
+    
+    
+    
+    
+</div>
 
 
 
+
+
+</div>
+
+<br>
+<br>
+<br>
+<div id = "magic">
+  <br>
+<br>
+<br>  
+<h2>Magic</h2>
+    
+    
 </div>
 
 <br>
@@ -110,17 +184,8 @@
 <br>
 <br>
 
-
-    <script type="text/javascript" src="/static/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-    <script type="text/javascript" src="">
+</div>
     
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-        
-    </script>
 </body>
 
 </html>
