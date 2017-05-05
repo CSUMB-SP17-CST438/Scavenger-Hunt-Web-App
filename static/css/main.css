@@ -1,0 +1,67 @@
+h3,
+    h4 {
+      color: white;
+    }
+    
+    h1,
+    h2,
+    h3,
+    h4 {
+      text-align: center;
+    }
+    
+    .dropdown {
+      margin-left: auto;
+    }
+    
+    .title {
+      background-color: black;
+      color: white;
+    }
+    
+    #stuff {
+      padding: 20px;
+    }
+    
+    .col-centered {
+      float: none;
+      margin: 0 auto;
+      text-align: left;
+    }
+    
+    .navbar-brand {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      text-align: center;
+      margin: 0 auto;
+    }
+    
+    .navbar-toggle {
+      z-index: 3;
+    }
+    
+    .navbar-inverse {
+      border-radius: 0px;
+      margin-bottom: 0px;
+    }
+    
+    .dropdown-menu {
+      width: 300px !important;
+    }
+    
+    .fbCenter {
+        margin-top: 13px;
+    }
+    
+    @media screen and (max-width: 767px) {
+      .dropdown-menu {
+        width: auto !important;
+        background-color: #fff !important;
+      }
+      
+      .fbCenter {
+          margin-top: auto;
+          margin-left: 13px;
+      }
+    }

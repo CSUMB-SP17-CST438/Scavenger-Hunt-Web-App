@@ -2,110 +2,56 @@
 <html>
 
 <head>
-    <title>Key Quest</title>
+  <title>Key Quest</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    #blackbar{
-      background-color:black;
-      text-align:center;
-    }
-   
-    
-    
-    .item{
-          margin: 0 auto;
-
-    }
-    h3{
-         margin-top: 60px;
-    }
-    #story{
-      background-color:#f9f4c7;
-        text-align: left;
-            border-radius: 15px;
-                padding: 50px; 
-                margin-right: 40px;
+  <link href='//fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+  <link rel="stylesheet" href="../static/css/landingpage.css">
 
 
-    }
-    
-     
-    #creators{
-      background-color:#f9f4c7;
-        text-align: left;
-            border-radius: 15px;
-                padding: 20px; 
-                margin-right: 40px;
-
-
-    }
-    
-    #magic{
-      background-color:#f9f4c7;
-        text-align: left;
-            border-radius: 15px;
-                padding: 50px; 
-                margin-right: 40px;
-
-
-    }
-    
-    #why{
-      background-color:#f9f4c7;
-        text-align: left;
-            border-radius: 15px;
-                padding: 50px; 
-                margin-right: 40px;
-
-
-    }
-    </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#myCarousel">KeyQuest</a>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#myCarousel">KeyQuest</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="size18"><a href="#story">Story</a></li>
+        <li class="size18"><a href="#why">Why</a></li>
+        <li class="size18"><a href="#magic">Under the Hood</a></li>
+        <li class="size18"><a href="#creators">Creators</a></li>
+        
+      </ul>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="active"><a href="#story">Story</a></li>
-      <li><a href="#creators">Creators</a></li>
-      <li><a href="#magic">Magic</a></li>
-      <li><a href="#">X</a></li>
-    </ul>
-  </div>
-</nav>
+  </nav>
 
 
- 
+
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
-    <br>
-<br>
-<br> 
+    
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
+      <h4><button type="button" class="btn btn-success play">PLAY!!!</button></h4>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <img class="img-responsive center-block" src="../static/img/iphone.png" alt="Los Angeles" style="width:50%;">
+        <img class="img-responsive center-block" src="../static/img/androidPhone.png" alt="android phone" style="width:50%;">
       </div>
 
       <div class="item">
-        <img  class="img-responsive center-block" src="../static/img/iphone.png" alt="Chicago" style="width:50%;">
+        <img class="img-responsive center-block" src="../static/img/iphone2.png" alt="iphone" style="width:50%;">
       </div>
-    
+
       <div class="item">
-        <img class="img-responsive center-block" src="../static/img/iphone.png" alt="New york" style="width:50%;">
+        <img class="img-responsive center-block" src="../static/img/windowsLaptop.png" alt="windows" style="width:50%;">
       </div>
     </div>
 
@@ -122,116 +68,171 @@
 
 
 
-<h1 id = "blackbar"><img src="../static/img/apple.jpeg" width = "50"></img>&nbsp<img src="../static/img/windows.png" width = "50" ></img>&nbsp
-<img src="../static/img/android.png" width = "50" ></img>&nbsp<img src="../static/img/ios.png" width = "50" ></img></h1>
+  <h1 id="blackbar"><img src="../static/img/apple.jpeg" width="50"></img>&nbsp<img src="../static/img/windows.png" width="50"></img>&nbsp
+    <img src="../static/img/linux.png" width="50"></img>&nbsp<img src="../static/img/android.png" width="50"></img>
+    <!--&nbsp<img src="../static/img/ios.png" width="50"></img>-->
 
-<div class = "container">
+  </h1>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
 
- 
-<h3>Story</h3>
-<div id = "story">
-    
-
-
-<p><strong>KeyQuest</strong> is a CSUMB  CST 438 Final project.  KeyQuest is a mobile web application that focuses on blending reality and
-the virtual world in one.  It does so by getting the user up from the couch and focus more on the their surrounding park area. There the user 
-will start the application.  The user will be asked to  physically move to various locations in the park area in order to find virtual chests with the assistance of a compass. 
-Once a chest is found, the user will get a notification and the application will update with a new chest location-which will be again directed by the compass.
-This action will repeat four more times to encourage a thorough observation of a park while the user is kept busy hunting for chests.  The application can be
-"ended" once the last chest is found and  will alert the user that it has found all chests in the area and will collect a key. The application technically can't be 
-"beaten" because it encourages users to explore more parks and find their  chests in their own respected locations.
-</p>
-</div>
+        <div id="story">
+          <h3 class="fontAcl">
+            <!--<img src="../static/chests/foundChest.png">-->
+            Story</h3>
 
 
+          <p><strong class="fontAcl">KeyQuest</strong>  is a mobile web application that focuses on blending reality and the virtual world in one. 
+          Players will have to physically move to various locations at their nearest park in order to find virtual chests with the assistance of a compass. 
+          The game ends upon unlocking the door using the key that was found in the last chest.
+          
+          </p>
+        </div>
+
+      </div>
+      <div class="col-md-6">
 
 
-<h3>Magic</h3>
-<div id = "magic">
 
+        <div id="why">
+          <h3 class="fontAcl">
+            <!--<img src="../static/chests/foundChest.png">-->
+            Why</h3>
+          <p>
+            Our team's vision aimed to produce an application that would make our players coexist with the real world and the virtual one on their phone. 
+            We wanted players to enjoy nearby parks without having to feel disconnected from their devices. 
+            In order to accomplish this, the team create a web app to reach as many people as possible.
+          
+          </p>
 
-<p>
-KeyQuest is made up of multiple technologies all working harmoniously.  For the front end development we used Html5, Bootstrap, and Javascript.  
-The most notable piece is the Google Maps API which we used to display user location - shared by the geolocation feature in html5. To distinguish our 
-users, we implemented a login through Facebook that allows us to connect and store data individually. In the backend we have 
-Flask as our framework.  We have components made with React.  SocketIO to pass data around from our client to our server and vice versa. We also 
-have the Google places api, which is what directs the user to a new park location. All the data collected from the application is stored on our PSQL 
-database for returning users could pick up where they left off.  Our application was deployed to Heroku.
+        </div>
 
-</p>
-    
-    
-</div>
-
-<h3> WHY </h3>
-<div id = "why">
-  
-  <p>
-  Our team's vision from the start has aimed to produce an application that would make our users coexist with the real world and the virtual one on their phone.
-  We chose the aspect of finding and collecting chests, sort of like a scavenger hunt, but the user is encouranged explore the park's surroundings.  This feature is 
-  heighten when the user roams a park that the user is unacquainted with.  WHY WEB VS APP?  Our focus was to bring our application to as many people as possible, 
-  and if we were making an applicaiton on ios or android we could potentially reach less people. We want anyone with a phone web brower to pick up our application and 
-  enjoy without leaving anyone behind.
-  
-  </p>
-  
-</div>
-
- <h3>Creators</h3>
-
-<div id = "creators">
-   
-
-
-<div class="container">
- 
-  
-  <div class="row">
-    <div class="col-lg-6 align-self-center" >
-      <img  class="img-circle center-block"  src="../static/img/maria.jpg" width = "250" ></img>
-      
-              <h2>Maria Loza</h2>
+      </div>
 
     </div>
-    <div class="col-lg-6" >
-     <img   class="img-circle center-block" src="../static/img/sam.jpg" height = "294"width = "280" ></img>
-          <h2>Samuel Valdez</h2> 
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div id="magic">
+          <h3 class="fontAcl">
+            <!--<img src="../static/chests/foundChest.png">-->
+            Under the Hood</h3>
+
+          <img class="webLogos" src ="../static/img/web.png">
+          <img class="googleLogo" src ="../static/img/google.png">
+          <img class="flaskLogo" src ="../static/img/flask.png">
+          <img class="reactLogo" src ="../static/img/react.png">
+          <img class="herokuLogo" src ="../static/img/heroku.png">
+          <img class="socketLogo" src ="../static/img/socket2.png">
+          <img class="jqueryLogo" src ="../static/img/jquery.png">
+          <img class="psqlLogo" src ="../static/img/psql.png">
+          <div class="center">
+            <img class="fbLogo" src ="../static/img/fb.png">
+          </div>
+          
+          
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div id="creators">
+          <h3 class="fontAcl">
+            <!--<img src="../static/chests/foundChest.png">-->
+            Creators</h3>
+
+
+          <div class="container">
+
+
+            <div class="row">
+              <div class="col-lg-6 align-self-center">
+                <img class="img-circle center-block" src="../static/img/maria.jpg" width="250"></img>
+
+                <h2 class="center">Maria Loza</h2>
+                <p class="center">Soon to be graduate, who loves working in web development.</p>
+
+              </div>
+              <div class="col-lg-6">
+                <img class="img-circle center-block" src="../static/img/sam.jpg" height="294" width="280"></img>
+                <h2 class="center">Samuel Valdez</h2>
+                <p class="center">Sam's bio</p>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    
+
+
+
+
+
+
 
   </div>
-</div>    
+  
+  <nav class="navbar navbar-default navbar-inverse">
+
+
+
+
+
+
+
+      <div class="row">
+        
+
+      </div>
+
+
+
+    </nav>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <script>
     
-    
-    
-    
-    
-</div>
+    $('.play').click(function(){
+      // window.location.href='https://obscure-mountain-33510.herokuapp.com/';
+      window.open("https://obscure-mountain-33510.herokuapp.com/");
+    })
+  </script>
 
-
-
-
-
-</div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-</div>
-    
 </body>
 
 </html>
