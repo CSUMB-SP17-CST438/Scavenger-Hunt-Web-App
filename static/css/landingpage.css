@@ -1,0 +1,119 @@
+#blackbar {
+    background-color: black;
+    text-align: center;
+    margin-top: 0px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.item {
+    margin: 0 auto;
+}
+
+h3 {
+    /*margin-top: 60px;*/
+}
+
+#story {
+    /*background-color: #f9f4c7;*/
+    text-align: left;
+    border-radius: 15px;
+    /*padding: 50px;*/
+    /*margin-right: 40px;*/
+}
+
+#creators {
+    /*background-color: #f9f4c7;*/
+    text-align: left;
+    border-radius: 15px;
+    /*padding: 20px;*/
+    /*margin-right: 40px;*/
+}
+
+#magic {
+    /*background-color: #f9f4c7;*/
+    text-align: left;
+    border-radius: 15px;
+    /*padding: 50px;*/
+    /*margin-right: 40px;*/
+}
+
+#why {
+    /*background-color: #f9f4c7;*/
+    text-align: left;
+    border-radius: 15px;
+    /*padding: 50px;*/
+    /*margin-right: 40px;*/
+}
+
+.navbar {
+    border-radius: 0px;
+    margin: 0px;
+}
+
+.right {
+    text-align: right;
+}
+
+.webLogos, .reactLogo {
+    width: 15%;
+}
+
+.googleLogo, .socketLogo {
+    width: 35%;
+}
+
+.flaskLogo, .jqueryLogo {
+    width: 25%;
+}
+
+.psqlLogo {
+    width: 17%;
+}
+
+.herokuLogo {
+    width: 13%;
+}
+
+.fbLogo {
+    width: 40%;
+}
+
+.center {
+    text-align: center;
+}
+
+.carousel {
+        background: url(https://ak5.picdn.net/shutterstock/videos/8449357/thumb/1.jpg);
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-family: 'Aclonica';
+}
+
+.size18 {
+    font-size: 17px;
+    font-family: 'Aclonica';
+    
+}
+
+.fontAcl {
+    font-family: 'Aclonica';
+    
+}
+
+.row {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+p {
+    font-size: 17px;
+}
+
+/*rgba(245, 245, 245, 1)*/
