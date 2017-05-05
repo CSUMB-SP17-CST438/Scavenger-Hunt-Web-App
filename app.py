@@ -845,6 +845,7 @@ def unlockDoor():
         
     });
     
+    
 def findNearestPark(playerLat, playerLng):
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(playerLat)+","+str(playerLng)+"&radius=804&types=park&key=AIzaSyBs4cGYz3h3Zx5ZDi8oaAtHsobIkXQvQOs"
     response = requests.get(url)
@@ -854,6 +855,10 @@ def findNearestPark(playerLat, playerLng):
     # print "park name"
     # print json_body["results"][0]["name"]
     # setParkName(json_body["results"][0]["name"])
+    socketio.emit('playerLoc', {
+           'demoLat': 37.478571,
+           'demoLng': -122.167928,
+        });
     setParkName("Kelly Park")
     # print json_body
     # setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
