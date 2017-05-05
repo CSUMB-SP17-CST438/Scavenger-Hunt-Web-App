@@ -853,9 +853,11 @@ def findNearestPark(playerLat, playerLng):
     # print json_body["results"][0]["geometry"]["location"]["lng"]
     # print "park name"
     # print json_body["results"][0]["name"]
-    setParkName(json_body["results"][0]["name"])
+    # setParkName(json_body["results"][0]["name"])
+    setParkName("Kelly Park")
     # print json_body
-    setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
+    # setParkCoords(json_body["results"][0]["geometry"]["location"]["lat"], json_body["results"][0]["geometry"]["location"]["lng"])
+    setParkCoords(37.478571, -122.167928)
     # print "park coords"
     # print getParkLat()
     # print getParkLng()
