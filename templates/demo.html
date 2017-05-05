@@ -4,45 +4,12 @@
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/google.css" />
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css" />
     
     <title>KEY QUEST</title>
     
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    
-    
-   <style type="text/css">
-      
-      h3{
-      color:white;
-    }
-    h2{
-       text-align:center;
-    }
-    
-          .col-centered{
-    float: none;
-    margin: 0 auto;
-    text-align:left;
-    }
-    
-    .dropdown{
-    
-    margin-left:auto;
-    
-    }
-    .title{
-      background-color:black;
-      color:white;
-    }
-    
-    #stuff{
-      padding:20px;
-    }
-    </style>
-    
-    
-    
     
     
   </head>
@@ -52,9 +19,9 @@
 window.fbAsyncInit = function () {
   FB.init({
       //maria's
-      appId: '1875922112681168',
+      //appId: '1875922112681168',
       //sam's
-      // appId: '155556774953468',
+      appId: '155556774953468',
       status: true,
       cookie: true,
       xfbml: true
@@ -92,127 +59,106 @@ window.fbAsyncInit = function () {
 </script>
     
       
-    
-    
-    
-    <div id = "playArea" >
-    
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-  <div class="container">
-    
-    <div class= "row">
-      
-       <div class="col-xs-6 col-md-4">
-         
-         <img src="../static/chests/missingChest.png" id = "chest1" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest11" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest2" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest21" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest3" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest31" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest4" height="42" width="42" >
-         <img src="../static/chests/foundChest.png" id = "chest41" height="42" width="42" style="display: none">
-         
-         <img src="../static/chests/missingChest.png" id = "chest5" height="42" width="42">
-         <img src="../static/chests/foundChest.png" id = "chest51" height="42" width="42" style="display: none">
-         
-         <!---PLACE HOLDER UNTIL I FIGURE OUT HOW TO MAKE THiS CHANGE -->
-         
-       </div>
-        <div class="col-xs-6 col-md-4">
-          <h3>KEY QUEST</h3>
-        </div>
-         <div class="col-xs-6 col-md-4">
-
-           <!--<div id="facebook"></div>-->
-           <!--<div id="fb-button" class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>-->
-          <div class="fb-login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
-  
-           <div class="container">
-
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">How To Play
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu dropdown-menu-left">
-      
-      <h2 class = "title">  KEY QUEST</h2>
-      <div id= "stuff">
-      
-      <strong>OBJECTIVE:</strong><li>Find all 5 chests to unlock the door.</li> 
-      <strong>DIRECTIONS:</strong>
-      <ul><li>Login with Facebook</li> 
-      <li>We'll locate your location.</li>
-      <li>Direct you to nearest park.</li>
-      <li>Collect 5 chests to unlock door. </li>
-      <li>WIN.</li>
-      </ul>
+    <nav class="navbar navbar-default  navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+        <a class="navbar-brand" href="#">Key Quest</a>
       </div>
-      
-     
-    </ul>
-  </div>
-</div>
-         </div>
-      
-      
-    </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li><img src="../static/chests/missingChest.png" id="chest1" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest11" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest2" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest21" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest3" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest31" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest4" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest41" height="42" width="42" style="display: none">
+
+            <img src="../static/chests/missingChest.png" id="chest5" height="42" width="42">
+            <img src="../static/chests/foundChest.png" id="chest51" height="42" width="42" style="display: none">
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="fbCenter">
+            <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">How to Play <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <h2 class="title"> KEY QUEST</h2>
+              <div id="stuff">
+
+                <strong>OBJECTIVE:</strong>
+                <li>Find all 5 chests to unlock the door.</li>
+                <strong>DIRECTIONS:</strong>
+                <ul>
+                  <li>Login with Facebook</li>
+                  <li>We'll locate your location.</li>
+                  <li>Direct you to nearest park.</li>
+                  <li>Collect 5 chests to unlock door. </li>
+                  <li>WIN.</li>
+                </ul>
+              </div>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     
-    
-    
-  </div>
-  
-  
-  </nav>
-    
-    
-    
-    
+    <div id="map"></div>
+
+
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
-      
-      
-   
-      
-      
-          <div class="row">
-      <div class="col-xs-3 col-md-4">
-        
-        <div class="btn-group">
+
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-xs-3 col-md-4">
+<div class="btn-group">
       <button id="up" type="button" class="btn btn-primary" style="display: none">Up</button>
       <button id="left" type="button" class="btn btn-primary" style="display: none">Left</button>
       <button id="right" type="button" class="btn btn-primary" style="display: none">Right</button>
       <button id="down" type="button" class="btn btn-primary" style="display: none">Down</button>
     </div>
-        
-      </div>
-         <div class="col-xs-3 col-md-4">
-            
-           <p class="text-center">
-            
-             
-              <button id="start" type="button" class="btn btn-success">Start!</button>
-              <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
-              <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
-             </p>
-         </div>
-        
-       <div class="col-xs-3 col-md-4">
+
+
+        </div>
+        <div class="col-xs-3 col-md-4">
+
+          <p class="text-center">
+
+
+            <button id="start" type="button" class="btn btn-success">Ready!</button>
+            <button id="update" type="button" class="btn btn-info" style="display: none">Update</button>
+            <button id="key" type="button" class="btn btn-info" style="display: none">Use Key</button>
+          </p>
+        </div>
+
+        <div class="col-xs-3 col-md-4">
           <div id="content"></div>
-       </div>
-      
-   </div> 
-      
-      
-      
+        </div>
+
+      </div>
+
+
+
     </nav>
     
-    </div>  
     
     
-    
-<div id="map"></div>
 
     
     
